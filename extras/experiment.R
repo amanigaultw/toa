@@ -1,3 +1,7 @@
+devtools::install_github("amanigaultw/toa")
+
+rm(list = ls())
+
 library(toa)
 
 data("Chang")
@@ -30,7 +34,4 @@ test2 <- toa::bootstrap_gene_TOA_function(Bootstrap_Samples = 200,
                                           gene_cols = NULL,
                                           ref_gene_col = "gene",
                                           foldThreshDEG = 1.25)
-
-test2$results
-
 
