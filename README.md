@@ -6,7 +6,7 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-Offers tools to perform transcriptomics analysis, including Transcript Origin Analysis and related tools to ease management of RNA transcription data.
+Offers tools to perform transcriptomics analyses, including Transcript Origin Analysis.
 
 ## Installation
 
@@ -20,7 +20,7 @@ devtools::install_github("amanigaultw/toa")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This is a basic example which shows you how to perform transcript origin analysis using a sample gene expression data set (Chang) and a sample reference data set (epith_mesen_ref).
 
 ``` r
 library(toa)
