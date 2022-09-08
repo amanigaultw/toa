@@ -6,7 +6,7 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of toa is to …
+Offers tools to perform transcriptomics analysis, including Transcript Origin Analysis and related tools to ease management of RNA transcription data.
 
 ## Installation
 
