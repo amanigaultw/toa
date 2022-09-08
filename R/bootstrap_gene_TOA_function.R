@@ -22,6 +22,8 @@ bootstrap_gene_TOA_function <- function(Analysis_Dataframe, predictor_col, TOA_R
     opts <- list(progress = progress)
   }
 
+  '%dopar%' <- foreach::'%dopar%'
+
   #bootstrap loop (multithreaded)
   Vboot = foreach::foreach(i=1:Bootstrap_Samples, .combine='c', .inorder=FALSE, .export='gene_TOA_function', .options.snow = opts) %dopar% {
 

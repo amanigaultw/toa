@@ -1,4 +1,3 @@
-# ADD DESCRIPTION
 compute_diagnosticity_scores <- function(Dataframe, gene_col, Cell_of_interest_col, Reference_cells_col, logZeroSubstituteExpressionValue = .001, na.rm = TRUE, gene_to_upper = TRUE){
 
   #make sure that gene symbols are all in upper case characters
