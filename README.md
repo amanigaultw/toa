@@ -20,7 +20,7 @@ devtools::install_github("amanigaultw/toa")
 
 ## Example
 
-This is a basic example which shows you how to perform transcript origin analysis using a sample gene expression data set (Chang) and a sample reference data set (epith_mesen_ref).
+This is a basic example which shows you how to perform transcript origin analysis using a sample gene expression dataset (Chang) and a sample reference dataset (epith_mesen_ref).
 
 ``` r
 library(toa)
