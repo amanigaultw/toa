@@ -1,6 +1,6 @@
 toa <- function(x, genes, cov = NULL, toa_ref, foldThreshDEG = 1.5){
 
-  if(!valid_input_x(x) | !valid_input_genes(genes) | !valid_input_cov(cov) | !valid_input_toa_ref(toa_ref)) stop("invalid inputs; check errors")
+  if(!valid_input_x(x) | !valid_input_genes(genes) | !valid_input_cov(cov) | !valid_input_toa_ref(toa_ref)) stop("invalid inputs; check warnings")
 
   #instantiate results list
   results <- list(df.means = NA,
