@@ -12,7 +12,7 @@ toa <- function(x, genes, cov = NULL, toa_ref, foldThreshDEG = 1.5){
   df.DEG = get_DEG(x, genes, cov, foldThreshDEG)
 
   if(is.null(df.DEG)){
-    print("ERROR: get_DEG failed")
+    warning("ERROR: get_DEG failed")
     return(results)
   }
 
