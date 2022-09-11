@@ -80,7 +80,7 @@ get_means <- function(df.DEG){
   cellDiagnosticityPopulationMeanScoresLog <- mean(df.DEG.ref.matched$DiagnosticityScoresLog)
 
   # aggregate by DEG (i.e., flagged as up vs. down regulated)
-  df.temp.means <- aggregate(df.DEG.ref.matched.expressed[, 4:5], list(df.DEG.ref.matched.expressed$DEG), mean)
+  df.temp.means <- aggregate(df.DEG.ref.matched.expressed[, c("DiagnosticityScoresLinear", "DiagnosticityScoresLog")], list(df.DEG.ref.matched.expressed$DEG), mean)
 
   #compute results
   up_reg_linear = df.temp.means[df.temp.means[,1] == "1", "DiagnosticityScoresLinear"] - cellDiagnosticityPopulationMeanScoresLinear
@@ -115,4 +115,32 @@ get_df_means <- function(df.DEG){
                                    reg_log = means$reg_log))
 
   return(df.means)
+}
+
+toa_lite <- function(x, genes, toa_ref, cov = NULL, foldThreshDEG = 1.5){
+
+  #instantiate results list
+  results = NULL
+
+  #get differentially expressed genes
+  df.DEG = get_DEG(x, genes, cov, foldThreshDEG)
+
+  #identify gene symbols that are present in both the analyzed and reference datasets, and that are up/down regulated
+  df.DEG$ref_matched <- ifelse(df.DEG$gene %in% toa_ref$gene, 1, 0)
+  df.DEG$ref_matched_expressed <- ifelse(df.DEG$ref_matched == 1 & df.DEG$DEG != 0, 1, 0)
+
+  #merge diagnosticity scores
+  df.DEG <- merge(df.DEG, toa_ref, by = "gene", all.x = TRUE)
+
+  #compute mean diagnosticity scores (if any up/down regulated genes could be matched up to the reference data)
+  if(sum(df.DEG$ref_matched_expressed) > 0){
+    df.means <- get_df_means(df.DEG)
+  }else{
+    return(results)
+  }
+
+  #if no failure up to this point, update the results list with computed values
+  results = df.means
+
+  return(results)
 }

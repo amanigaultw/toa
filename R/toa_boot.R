@@ -1,9 +1,13 @@
 #' @export
 toa_boot <- function(x, genes, toa_ref, cov = NULL, foldThreshDEG = 1.5, n_boot = 200, show_progress = TRUE){
 
+  #instantiate results list
+  results <- list(results = NULL,
+                  boot = NULL,
+                  inputs = as.list(environment()))
+
   #get non bootstrapped means
-  argg <- as.list(environment())
-  non_boot_means <- do.call(toa, argg)$df.means
+  non_boot_means <- toa_lite(x, genes, toa_ref, cov, foldThreshDEG)
 
   #reset any previous multithreading settings
   env <- foreach:::.foreachGlobals
@@ -18,7 +22,7 @@ toa_boot <- function(x, genes, toa_ref, cov = NULL, foldThreshDEG = 1.5, n_boot 
   if(show_progress == TRUE){
     #suppressMessages(suppressWarnings(require(doSNOW)))
     doSNOW::registerDoSNOW(cl)
-    pb <- utils::txtProgressBar(max = Bootstrap_Samples, style = 3)
+    pb <- utils::txtProgressBar(max = n_boot, style = 3)
     progress <- function(n) setTxtProgressBar(pb, n)
     opts <- list(progress = progress)
   }
@@ -26,13 +30,14 @@ toa_boot <- function(x, genes, toa_ref, cov = NULL, foldThreshDEG = 1.5, n_boot 
   '%dopar%' <- foreach::'%dopar%'
 
   #bootstrap loop (multithreaded)
-  Vboot = foreach::foreach(i=1:Bootstrap_Samples, .combine='c', .inorder=FALSE, .export='gene_TOA_function', .options.snow = opts) %dopar% {
+  Vboot = foreach::foreach(i=1:n_boot, .combine='c', .inorder=FALSE, .export='gene_TOA_function', .options.snow = opts) %dopar% {
 
-    resampled_rows <- sample(seq_len(nrow(Analysis_Dataframe)), nrow(Analysis_Dataframe), replace = TRUE)
-    resampled_Analysis_Dataframe <- Analysis_Dataframe[resampled_rows, ]
-    argg$Analysis_Dataframe = resampled_Analysis_Dataframe
+    resampled_rows <- sample(seq_len(length(x)), length(x), replace = TRUE)
+    resampled_x <- Analysis_Dataframe[resampled_rows, ]
 
-    temp <- do.call(gene_TOA_function, argg)
+
+
+    temp <- toa_lite(x, genes, toa_ref, cov, foldThreshDEG)
 
     if("df.means" %in% names(temp)){
       bootstrapped_results <- temp$df.means$means
@@ -63,24 +68,24 @@ toa_boot <- function(x, genes, toa_ref, cov = NULL, foldThreshDEG = 1.5, n_boot 
   boot_mean <- apply(boot[,], 1, function(x) mean(x, na.rm = TRUE))
   boot_se <- apply(boot[,], 1, function(x) sd(x, na.rm = TRUE))
   boot_z = boot_mean / boot_se
-  boot_pValue = 2*pnorm(q= abs(boot_z), lower.tail=FALSE)
+  boot_pValue = 2*pnorm(q = abs(boot_z), lower.tail = FALSE)
 
   #create results dataframe
-  results <- data.frame(
-    gene_count_total = non_bootstrapped_results$total_genes,
-    #gene_count_used_for_TOA = non_bootstrapped_results$used_genes,
-    non_boot_mean = non_bootstrapped_results$means,
-    boot_mean = boot_mean,
-    boot_se = boot_se,
-    boot_z = boot_z,
-    boot_pValue = boot_pValue
-  )
+  df_results <- data.frame(gene_count_total = non_boot_means$total_genes,
+                           gene_count_used_for_TOA = non_boot_means$used_genes,
+                           non_boot_mean = non_boot_means$means,
+                           boot_mean = boot_mean,
+                           boot_se = boot_se,
+                           boot_z = boot_z,
+                           boot_pValue = boot_pValue)
 
   #print results
-  print(paste0(N_valid_boot_resamples, " out of ",  Bootstrap_Samples, " bootstrap resamples produced valid mean diagnosticity scores"))
+  print(paste0(N_valid_boot_resamples, " out of ",  n_boot, " bootstrap resamples produced valid mean diagnosticity scores"))
   print(results)
 
   #pass results dataframe to the function
-  return(list(boot = boot,
-              results = results))
+  results$df_results <- df_results
+  results$boot <- boot
+
+  return(results)
 }

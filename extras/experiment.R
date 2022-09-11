@@ -6,12 +6,12 @@ library(toa)
 
 #load example data
 data("Chang")
-data("epith_mesen_ref")
+data("epith_mesen_ref_raw")
 
 #get diagnosticity scores
-toa_ref <- get_toa_ref(gene_symbols = epith_mesen_ref[,1],
-                       exp_treatment = epith_mesen_ref[,2:11],
-                       exp_control = epith_mesen_ref[,12:21])
+toa_ref_epith_mesen <- get_toa_ref(gene_symbols = epith_mesen_ref_raw[,1],
+                                   exp_treatment = epith_mesen_ref_raw[,2:11],
+                                   exp_control = epith_mesen_ref_raw[,12:21])
 
 #get differentially expressed genes as a function of the stress predictor
 DEG_result <- get_DEG(x = Chang$stress,
@@ -21,7 +21,7 @@ DEG_result <- get_DEG(x = Chang$stress,
 #get mean diagnosticity scores for these differentially expressed genes
 test1 <- toa(x = Chang$stress,
              genes = subset(Chang, select = -stress),
-             toa_ref = toa_ref,
+             toa_ref = toa_ref_epith_mesen,
              foldThreshDEG = 1.25)
 
 test1$df.means
