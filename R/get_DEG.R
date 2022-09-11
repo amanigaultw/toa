@@ -1,7 +1,12 @@
 #' @export
 get_DEG <- function(x, genes, cov = NULL, foldThreshDEG = 1.5){
 
-  if(!valid_input_x(x) | !valid_input_genes(genes) | !valid_input_cov(cov)) stop("invalid inputs; check warnings")
+  df_DEG <- NULL
+
+  if(!valid_input_x(x) | !valid_input_genes(genes) | !valid_input_cov(cov)){
+    warning("invalid inputs; check warnings")
+    return(df_DEG)
+  }
 
   if(is.null(cov)){
     X_vars <- matrix(x)
@@ -17,10 +22,9 @@ get_DEG <- function(x, genes, cov = NULL, foldThreshDEG = 1.5){
   }
 
   #generate a dataframe containing gene symbols, regression coefficients and DEG
-  df.DEG = data.frame(
-    gene = colnames(genes),
-    dif = round(dif, 12),
-    DEG = sign(dif)*(abs(dif) > log2(foldThreshDEG)))
+  df_DEG = data.frame(gene = colnames(genes),
+                      dif = round(dif, 12),
+                      DEG = sign(dif)*(abs(dif) > log2(foldThreshDEG)))
 
-  return(df.DEG)
+  return(df_DEG)
 }
