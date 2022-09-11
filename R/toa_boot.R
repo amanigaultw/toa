@@ -1,8 +1,9 @@
-bootstrap_gene_TOA_function <- function(Analysis_Dataframe, predictor_col, TOA_Reference_Dataframe, Bootstrap_Samples = 200, covariate_cols = NULL, gene_cols = NULL, ref_gene_col = "gene", foldThreshDEG = 1.5, show_progress = TRUE){
+#' @export
+toa_boot <- function(x, genes, toa_ref, cov = NULL, foldThreshDEG = 1.5, n_boot = 200, show_progress = TRUE){
 
-  #get non_bootstrapped_results
+  #get non bootstrapped means
   argg <- as.list(environment())
-  non_bootstrapped_results <- do.call(gene_TOA_function, argg)$df.means
+  non_boot_means <- do.call(toa, argg)$df.means
 
   #reset any previous multithreading settings
   env <- foreach:::.foreachGlobals

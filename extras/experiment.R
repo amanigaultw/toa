@@ -25,3 +25,12 @@ test1 <- toa(x = Chang$stress,
              foldThreshDEG = 1.25)
 
 test1$df.means
+
+x = Chang$stress
+genes = subset(Chang, select = -stress)
+foldThreshDEG = 1.25
+cov = NULL
+foldThreshDEG = 1.5
+n_boot = 200
+show_progress = TRUE
+
