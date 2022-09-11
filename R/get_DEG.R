@@ -10,9 +10,9 @@
 #' @examples
 #' #load example data
 #' data("Chang")
-#' data("epith_mesen_ref_raw")
-#' #get_toa_ref
-#' toa_ref_epith_mesen <- get_toa_ref(gene_symbols = epith_mesen_ref_raw[,1], exp_treatment = epith_mesen_ref_raw[,2:11], exp_control = epith_mesen_ref_raw[,12:21])
+#' #get differentially expressed genes
+#' DEG_result <- get_DEG(x = Chang$stress, genes = subset(Chang, select = -stress), foldThreshDEG = 1.25)
+#' table(DEG_result$DEG)
 #' @export
 get_DEG <- function(x, genes, cov = NULL, foldThreshDEG = 1.5){
 

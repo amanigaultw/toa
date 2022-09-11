@@ -1,3 +1,18 @@
+#' get reference data needed for Transcript Origin Analysis
+#'
+#' \code{get_toa_ref} computes diagnosticity scores for a given set of treatment v. control observations, typically replicates.
+#'
+#' @param gene_symbols a character vector containing gene symbols.
+#' @param exp_treatment a numeric matrix of gene expression values, where columns are observations from a treatment/exposure group.
+#' @param exp_control a numeric matrix of gene expression values, where columns are observations from a control/reference group.
+#' @param logZeroSub the numeric value used to replace expression values that cannot be log2 transformed; .001 by default.
+#' @param toupper bool indicating whether gene symbols should be set to uppercase.
+#' @return a data frame containing unique gene symbols and average diagnosticity scores.
+#' @examples
+#' #load example data
+#' data("epith_mesen_ref_raw")
+#' #get diagnosticity scores
+#' toa_ref_epith_mesen <- get_toa_ref(gene_symbols = epith_mesen_ref_raw[,1], exp_treatment = epith_mesen_ref_raw[,2:11], exp_control = epith_mesen_ref_raw[,12:21])
 #' @export
 get_toa_ref <- function(gene_symbols, exp_treatment, exp_control, logZeroSub = .001, toupper = TRUE){
 
