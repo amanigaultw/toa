@@ -27,7 +27,7 @@ library(toa)
 
 #load example data
 data("Chang")
-data("toa_ref_epith_mesen")
+data("epith_mesen_ref_raw")
 
 #get differentially expressed genes
 DEG_result <- get_DEG(x = Chang$stress, 
