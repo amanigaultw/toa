@@ -17,7 +17,7 @@ decouple_multi_gene_rows(
 
 \item{sep}{a string indicating how multi-gene symbols are separated (e.g., "///").}
 
-\item{gene_col}{a numeric indicating the position of the gene symbol column within \code{df}; the first column is used by default.}
+\item{gene_col}{a numeric value indicating the position of the gene symbol column within \code{df}; the first column is used by default.}
 
 \item{header}{bool indicating whether the first row of data is a header; TRUE by default.}
 

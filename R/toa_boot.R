@@ -19,7 +19,7 @@
 #' data("Chang")
 #' data("toa_ref_epith_mesen")
 #' #toa_boot
-#' toa_boot_result <- toa_boot(x = Chang$stress, genes = subset(Chang, select = -stress), toa_ref = toa_ref_epith_mesen, foldThreshDEG = 1.25)
+#' #toa_boot_result <- toa_boot(x = Chang$stress, genes = subset(Chang, select = -stress), toa_ref = toa_ref_epith_mesen, foldThreshDEG = 1.25)
 #' @export
 toa_boot <- function(x, genes, toa_ref, cov = NULL, foldThreshDEG = 1.5, n_boot = 200, show_progress = TRUE){
 
