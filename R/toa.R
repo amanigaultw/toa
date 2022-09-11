@@ -1,12 +1,16 @@
 toa <- function(x, genes, cov = NULL, toa_ref, foldThreshDEG = 1.5){
 
-  if(!valid_input_x(x) | !valid_input_genes(genes) | !valid_input_cov(cov) | !valid_input_toa_ref(toa_ref)) stop("invalid inputs; check warnings")
-
   #instantiate results list
   results <- list(df.means = NA,
                   df.DEG = NA,
                   df.DEG.ref.matched = NA,
                   df.DEG.ref.matched.expressed = NA)
+
+  #
+  if(!valid_input_x(x) | !valid_input_genes(genes) | !valid_input_cov(cov) | !valid_input_toa_ref(toa_ref)){
+    warning("invalid inputs; check warnings")
+    return(results)
+  }
 
   #get differentially expressed genes
   df.DEG = get_DEG(x, genes, cov, foldThreshDEG)
