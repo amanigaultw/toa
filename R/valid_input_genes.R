@@ -1,4 +1,4 @@
-.valid_input_genes <- function(genes){
+valid_input_genes <- function(genes){
 
   if(sum(is.na(genes)) > 0){
     warning("invalid gene input")
