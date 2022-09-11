@@ -7,12 +7,13 @@ Maintainer: Andrew Manigault <andrew_manigault@brown.edu>
 Description: Offers tools to perform transcriptomics analysis, 
    including Transcript Origin Analysis and related tools to 
    ease management of RNA transcription data.
-License: MIT
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
     RcppArmadillo,
     doParallel,
     foreach,
-    doSNOW
+    doSNOW,
+    svMisc
 RoxygenNote: 7.2.0
