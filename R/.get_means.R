@@ -1,4 +1,4 @@
-get_means <- function(df.DEG.ref.matched, df.DEG.ref.matched.expressed){
+.get_means <- function(df.DEG.ref.matched, df.DEG.ref.matched.expressed){
 
   #compute population diagnosticity score
   cellDiagnosticityPopulationMeanScoresLinear <- mean(df.DEG.ref.matched$DiagnosticityScoresLinear)

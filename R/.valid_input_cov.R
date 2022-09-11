@@ -1,4 +1,4 @@
-valid_input_cov <- function(cov){
+.valid_input_cov <- function(cov){
 
   if(!is.null(cov)){
     sds <- apply(as.matrix(cov), 2, function(x) sd(x, na.rm = TRUE))

@@ -1,18 +1,23 @@
 toa <- function(x, genes, cov = NULL, toa_ref, foldThreshDEG = 1.5){
 
-  if(!valid_input_x(x) | !valid_input_genes(genes) | !valid_input_cov(cov) | !valid_input_toa_ref(toa_ref)) stop("invalid inputs; check warnings")
-
   #instantiate results list
   results <- list(df.means = NA,
                   df.DEG = NA,
                   df.DEG.ref.matched = NA,
                   df.DEG.ref.matched.expressed = NA)
 
+  #handle invalid inputs
+  if(!.valid_input_x(x) | !.valid_input_genes(genes) | !.valid_input_cov(cov) | !.valid_input_toa_ref(toa_ref)){
+    warning("invalid inputs; check warnings")
+    return(results)
+  }
+
   #get differentially expressed genes
   df.DEG = get_DEG(x, genes, cov, foldThreshDEG)
 
+  #handle null df.DEG
   if(is.null(df.DEG)){
-    warning("ERROR: get_DEG failed")
+    warning("get_DEG failed")
     return(results)
   }
 
@@ -26,8 +31,8 @@ toa <- function(x, genes, cov = NULL, toa_ref, foldThreshDEG = 1.5){
   if(nrow(df.DEG.ref.matched.expressed) > 0){
 
     #get DEG counts and diagnosticity score means
-    counts <- get_gene_counts(df.DEG, df.DEG.ref.matched)
-    means <- get_means(df.DEG.ref.matched, df.DEG.ref.matched.expressed)
+    counts <- .get_gene_counts(df.DEG, df.DEG.ref.matched)
+    means <- .get_means(df.DEG.ref.matched, df.DEG.ref.matched.expressed)
 
     #organize results as a dataframe
     df.means <- data.frame(total_genes = counts$gene_count,
@@ -40,7 +45,7 @@ toa <- function(x, genes, cov = NULL, toa_ref, foldThreshDEG = 1.5){
                                      reg_log = means$reg_log))
 
   }else{
-    print("ERROR: could not aggregate diagnosticity score across up and down regulated genes; check how many genes are up/down regulated")
+    warning("could not aggregate diagnosticity score across up/down regulated genes; check how many genes are up/down regulated")
     return(results)
   }
 

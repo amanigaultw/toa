@@ -1,4 +1,4 @@
-get_gene_counts <- function(df.DEG, df.DEG.ref.matched){
+.get_gene_counts <- function(df.DEG, df.DEG.ref.matched){
 
   #save counts of up and down regulated genes before accounting for whether their gene symbol can be matched to a TOA diagnosticity score
   up_reg_count <- table(df.DEG$DEG)["1"]
