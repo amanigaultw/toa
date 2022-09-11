@@ -20,7 +20,7 @@ devtools::install_github("amanigaultw/toa")
 
 ## Example
 
-This is a basic example which shows you how to perform transcript origin analysis using a sample gene expression dataset (Chang) and a sample reference dataset (epith_mesen_ref).
+This example illustrate how the toa package can be used to identify differentially expressed genes, generate a reference dataset for Transcript Origin Analysis (TOA), and run a (non)bootstrapped TOA.
 
 ``` r
 library(toa)
@@ -40,14 +40,14 @@ toa_ref_epith_mesen <- get_toa_ref(gene_symbols = epith_mesen_ref_raw[,1],
                                    exp_treatment = epith_mesen_ref_raw[,2:11],
                                    exp_control = epith_mesen_ref_raw[,12:21])
 
-#toa
+#toa (does not produce bootstrap estimates of mean diagnosticity scores)
 toa_result <- toa(x = Chang$stress, 
                   genes = subset(Chang, select = -stress), 
                   toa_ref = toa_ref_epith_mesen, 
                   foldThreshDEG = 1.25)
 toa_result$df_results
 
-#toa_boot
+#toa_boot (produces bootstrap estimates of mean diagnosticity scores)
 toa_boot_result <- toa_boot(x = Chang$stress, 
                             genes = subset(Chang, select = -stress), 
                             toa_ref = toa_ref_epith_mesen, 
