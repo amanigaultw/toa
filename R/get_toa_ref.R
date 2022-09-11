@@ -1,3 +1,4 @@
+#' @export
 get_toa_ref <- function(gene_symbols, exp_treatment, exp_control, logZeroSub = .001, na.rm = TRUE){
 
   #generate copies of the data

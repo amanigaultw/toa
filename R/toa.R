@@ -1,3 +1,4 @@
+#' @export
 toa <- function(x, genes, cov = NULL, toa_ref, foldThreshDEG = 1.5){
 
   #instantiate results list

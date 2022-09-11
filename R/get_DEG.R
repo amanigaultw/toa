@@ -1,3 +1,4 @@
+#' @export
 get_DEG <- function(x, genes, cov = NULL, foldThreshDEG = 1.5){
 
   if(!valid_input_x(x) | !valid_input_genes(genes) | !valid_input_cov(cov)) stop("invalid inputs; check warnings")
