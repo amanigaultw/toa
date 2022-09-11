@@ -37,7 +37,7 @@ a list object containing:
 }
 }
 \description{
-\code{toa_boot} performs transcript origin analysis, including bootstrapped estimates of mean diagnosticity scores.
+\code{toa_boot} performs transcript origin analysis, including bootstrapped estimates of mean diagnosticity scores; will use n-1 available CPU cores by default.
 }
 \examples{
 #load example data

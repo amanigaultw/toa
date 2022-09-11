@@ -1,6 +1,6 @@
 #' bootstrapped Transcript Origin Analysis
 #'
-#' \code{toa_boot} performs transcript origin analysis, including bootstrapped estimates of mean diagnosticity scores.
+#' \code{toa_boot} performs transcript origin analysis, including bootstrapped estimates of mean diagnosticity scores; will use n-1 available CPU cores by default.
 #'
 #' @param x a numeric vector of values; the predictor variable of interest.
 #' @param genes a numeric matrix of gene expression values, where columns are individual genes.

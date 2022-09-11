@@ -49,8 +49,15 @@ show_progress = TRUE
 #load example data
 data("Chang")
 data("toa_ref_epith_mesen")
+
+#get differentially expressed genes
+DEG_result <- get_DEG(x = Chang$stress, genes = subset(Chang, select = -stress), foldThreshDEG = 1.25)
+table(DEG_result$DEG)
+
 #toa
 toa_result <- toa(x = Chang$stress, genes = subset(Chang, select = -stress), toa_ref = toa_ref_epith_mesen, foldThreshDEG = 1.25)
+toa_result$df_results
 
 #toa_boot
 toa_boot_result <- toa_boot(x = Chang$stress, genes = subset(Chang, select = -stress), toa_ref = toa_ref_epith_mesen, foldThreshDEG = 1.25)
+toa_boot_result$df_results
