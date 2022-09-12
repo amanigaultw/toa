@@ -17,7 +17,10 @@
 #' data("Chang")
 #' data("toa_ref_epith_mesen")
 #' #toa
-#' toa_result <- toa(x = Chang$stress, genes = subset(Chang, select = -stress), toa_ref = toa_ref_epith_mesen, foldThreshDEG = 1.25)
+#' toa_result <- toa(x = Chang$stress,
+#'                   genes = subset(Chang, select = -stress),
+#'                   toa_ref = toa_ref_epith_mesen,
+#'                   foldThreshDEG = 1.25)
 #' @export
 toa <- function(x, genes, toa_ref, cov = NULL, foldThreshDEG = 1.5){
 

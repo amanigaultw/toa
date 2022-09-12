@@ -11,7 +11,9 @@
 #' #load example data
 #' data("Chang")
 #' #get differentially expressed genes
-#' DEG_result <- get_DEG(x = Chang$stress, genes = subset(Chang, select = -stress), foldThreshDEG = 1.25)
+#' DEG_result <- get_DEG(x = Chang$stress,
+#'                       genes = subset(Chang, select = -stress),
+#'                       foldThreshDEG = 1.25)
 #' table(DEG_result$DEG)
 #' @export
 get_DEG <- function(x, genes, cov = NULL, foldThreshDEG = 1.5){
