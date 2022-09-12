@@ -30,7 +30,11 @@ performs transcript origin analysis without bootstrapped estimates of mean diagn
 \examples{
 #load example data
 data("Chang")
-data("toa_ref_epith_mesen")
+data("epith_mesen_ref_raw")
+#get diagnosticity scores
+toa_ref_epith_mesen <- get_toa_ref(gene_symbols = epith_mesen_ref_raw[,1],
+                                   exp_treatment = epith_mesen_ref_raw[,2:11],
+                                   exp_control = epith_mesen_ref_raw[,12:21])
 #toa
 toa_result <- toa(x = Chang$stress,
                   genes = subset(Chang, select = -stress),
