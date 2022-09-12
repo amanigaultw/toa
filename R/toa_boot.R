@@ -47,7 +47,7 @@ toa_boot <- function(x, genes, toa_ref, cov = NULL, foldThreshDEG = 1.5, n_boot 
   if(show_progress == TRUE){
     doSNOW::registerDoSNOW(cl)
     pb <- utils::txtProgressBar(max = n_boot, style = 3)
-    progress <- function(n) setTxtProgressBar(pb, n)
+    progress <- function(n) utils::setTxtProgressBar(pb, n)
     opts <- list(progress = progress)
   }
 
@@ -92,9 +92,9 @@ toa_boot <- function(x, genes, toa_ref, cov = NULL, foldThreshDEG = 1.5, n_boot 
 
   #compute bootstrapped estimates and stats
   boot_mean <- apply(boot[,], 1, function(x) mean(x, na.rm = TRUE))
-  boot_se <- apply(boot[,], 1, function(x) sd(x, na.rm = TRUE))
+  boot_se <- apply(boot[,], 1, function(x) stats::sd(x, na.rm = TRUE))
   boot_z = boot_mean / boot_se
-  boot_pValue = 2*pnorm(q = abs(boot_z), lower.tail = FALSE)
+  boot_pValue = 2*stats::pnorm(q = abs(boot_z), lower.tail = FALSE)
 
   #create results dataframe
   df_results <- data.frame(gene_count_total = non_boot_means$total_genes,

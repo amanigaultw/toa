@@ -1,6 +1,6 @@
 valid_input_x <- function(x){
 
-  if(sum(is.na(x)) > 0 | sd(x) == 0) {
+  if(sum(is.na(x)) > 0 | stats::sd(x) == 0) {
     warning("invalid x input")
     return(FALSE)
   }
@@ -15,19 +15,13 @@ valid_input_genes <- function(genes){
     return(FALSE)
   }
 
-  # sds <- apply(as.matrix(genes), 2, function(x) sd(x, na.rm = TRUE))
-  # if(any(sds) == 0){
-  #   print("invalid gene input")
-  #   return(FALSE)
-  # }
-
   return(TRUE)
 }
 
 valid_input_cov <- function(cov){
 
   if(!is.null(cov)){
-    sds <- apply(as.matrix(cov), 2, function(x) sd(x, na.rm = TRUE))
+    sds <- apply(as.matrix(cov), 2, function(x) stats::sd(x, na.rm = TRUE))
 
     if(sum(is.na(cov)) > 0 | any(sds == 0)){
       warning("invalid cov input")
@@ -80,7 +74,7 @@ get_means <- function(df_DEG){
   cellDiagnosticityPopulationMeanScoresLog <- mean(df_DEG.ref.matched$DiagnosticityScoresLog)
 
   # aggregate by DEG (i.e., flagged as up vs. down regulated)
-  df.temp.means <- aggregate(df_DEG.ref.matched.expressed[, c("DiagnosticityScoresLinear", "DiagnosticityScoresLog")], list(df_DEG.ref.matched.expressed$DEG), mean)
+  df.temp.means <- stats::aggregate(df_DEG.ref.matched.expressed[, c("DiagnosticityScoresLinear", "DiagnosticityScoresLog")], list(df_DEG.ref.matched.expressed$DEG), mean)
 
   #compute results
   up_reg_linear = df.temp.means[df.temp.means[,1] == "1", "DiagnosticityScoresLinear"] - cellDiagnosticityPopulationMeanScoresLinear
