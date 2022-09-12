@@ -38,7 +38,7 @@ toa_boot <- function(x, genes, toa_ref, cov = NULL, foldThreshDEG = 1.5, n_boot 
   cov <- cov_to_matrix(cov, x)
 
   #reset any previous multithreading settings
-  env <- foreach:::.foreachGlobals
+  env <- utils::getFromNamespace(".foreachGlobals", "foreach")
   rm(list=ls(name=env), pos=env)
 
   #setup parallel backend to use multiple processors
