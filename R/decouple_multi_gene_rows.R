@@ -30,7 +30,8 @@ decouple_multi_gene_rows <- function(df, sep = "///", gene_col = 1, header = TRU
   df <- subset(df, df[,gene_col] != "")
 
   #decouple multi-gene rows
-  temp <- list()
+  n <- length(unlist(strsplit(df[,gene_col], sep, fixed = TRUE)))
+  temp <- vector("list", n)
   for(i in 1:nrow(df)){
     symbol <- df[i,gene_col]
 
@@ -41,9 +42,9 @@ decouple_multi_gene_rows <- function(df, sep = "///", gene_col = 1, header = TRU
       for(j in 1:length(symbols)){
         m[j,] <- c(symbols[j], t(df[i,-gene_col]))
       }
-      temp[[i]] <- as.data.frame(m)
+      temp[[i]] <- m
     }else{
-      temp[[i]] <- as.data.frame(df[i,])
+      temp[[i]] <- as.matrix(df[i,])
     }
 
     if(progress == TRUE){
