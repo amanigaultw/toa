@@ -19,7 +19,7 @@ get_DEG(x, genes, cov = NULL, foldThreshDEG = 1.5)
 a data frame containing gene symbols, raw regression coefficients, and a DEG variable; DEG values indicate whether a given gene showed expression values beyond threshold (1 = increased; -1 = decreased; 0 = below threshold).
 }
 \description{
-\code{get_DEG} performs regressions to determine which gene show differential expression as a function of x; can adjust for covariates using \code{cov}.
+performs regressions to determine which gene show differential expression as a function of x; can adjust for covariates using \code{cov}.
 }
 \examples{
 #load example data

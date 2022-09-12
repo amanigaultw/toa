@@ -27,7 +27,7 @@ get_toa_ref(
 a data frame containing unique gene symbols and average diagnosticity scores.
 }
 \description{
-\code{get_toa_ref} computes diagnosticity scores for a given set of treatment v. control observations, typically replicates.
+computes diagnosticity scores for a given set of treatment v. control observations, typically replicates.
 }
 \examples{
 #load example data

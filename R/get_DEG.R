@@ -1,6 +1,6 @@
 #' get Differentially Expressed Genes
 #'
-#' \code{get_DEG} performs regressions to determine which gene show differential expression as a function of x; can adjust for covariates using \code{cov}.
+#' performs regressions to determine which gene show differential expression as a function of x; can adjust for covariates using \code{cov}.
 #'
 #' @param x a numeric vector of values; the predictor variable of interest.
 #' @param genes a numeric matrix of gene expression values, where columns are individual genes.

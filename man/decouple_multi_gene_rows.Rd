@@ -27,7 +27,7 @@ decouple_multi_gene_rows(
 a data frame containing one row per gene symbols, where expression values are identical for previously coupled symbols.
 }
 \description{
-\code{decouple_multi_gene_rows} produces a data frame containing one row per gene symbols, where expression values are identical for previously coupled symbols.
+produces a data frame containing one row per gene symbols, where expression values are identical for previously coupled symbols.
 }
 \examples{
 #load example data

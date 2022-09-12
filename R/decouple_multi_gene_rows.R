@@ -1,6 +1,6 @@
 #' decouple gene expression matrices/data frame where some rows correspond to multiple gene symbols
 #'
-#' \code{decouple_multi_gene_rows} produces a data frame containing one row per gene symbols, where expression values are identical for previously coupled symbols.
+#' produces a data frame containing one row per gene symbols, where expression values are identical for previously coupled symbols.
 #'
 #' @param df a data frame or matrix containing gene symbols and gene expression values.
 #' @param sep a string indicating how multi-gene symbols are separated (e.g., "///").

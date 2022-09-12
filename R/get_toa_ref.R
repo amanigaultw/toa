@@ -1,6 +1,6 @@
 #' get reference data needed for Transcript Origin Analysis
 #'
-#' \code{get_toa_ref} computes diagnosticity scores for a given set of treatment v. control observations, typically replicates.
+#' computes diagnosticity scores for a given set of treatment v. control observations, typically replicates.
 #'
 #' @param gene_symbols a character vector containing gene symbols.
 #' @param exp_treatment a numeric matrix of gene expression values, where columns are observations from a treatment/exposure group.
