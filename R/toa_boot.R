@@ -65,7 +65,7 @@ toa_boot <- function(toa, n_boot = 200, progress = TRUE){
   }
 
   #bootstrap loop (multithreaded)
-  Vboot = foreach::foreach(i=1:n_boot, .combine='c', .inorder=FALSE, .export=c('toa'), .options.snow = opts) %dopar% {
+  Vboot = foreach::foreach(i=1:n_boot, .combine='c', .inorder=FALSE, .options.snow = opts) %dopar% {
 
     #assign default bootstrap results
     bootstrapped_results <- rep(NA, 6)
