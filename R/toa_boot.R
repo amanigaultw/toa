@@ -24,8 +24,7 @@
 #'                   toa_ref = toa_ref_epith_mesen,
 #'                   foldThreshDEG = 1.25)
 #' #toa_boot
-#' #toa_boot_result <- toa_boot(toa = toa_result,
-#' #                            foldThreshDEG = 1.25)
+#' #toa_boot_result <- toa_boot(toa = toa_result)
 #' @export
 toa_boot <- function(toa, n_boot = 200, progress = TRUE){
 
@@ -33,7 +32,7 @@ toa_boot <- function(toa, n_boot = 200, progress = TRUE){
   if(class(toa) != "toa" | is.null(toa$df_results) | is.null(toa$df_DEG)) stop("invalid toa parameters; check whether toa() produced a valid result object")
 
   #re-use toa inputs
-  list2env(toa$inputs)
+  list2env(toa$inputs, envir = environment())
 
   #instantiate results list
   results <- list(df_results = NULL,
