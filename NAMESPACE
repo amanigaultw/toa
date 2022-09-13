@@ -3,5 +3,6 @@
 export(decouple_multi_gene_rows)
 export(get_DEG)
 export(get_toa_ref)
+export(tfbm)
 export(toa)
 export(toa_boot)
