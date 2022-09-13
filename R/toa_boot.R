@@ -77,10 +77,10 @@ toa_boot <- function(toa, n_boot = 200, progress = TRUE){
     resampled_cov <- cov[resampled_rows, ]
 
     #get toa means
-    temp <- toa_lite(resampled_x, resampled_genes, toa_ref, resampled_cov, foldThreshDEG)
+    temp <- toa(resampled_x, resampled_genes, toa_ref, resampled_cov, foldThreshDEG)
 
     #update bootstrap results if toa_lite() was successful
-    if(!is.null(temp))  bootstrapped_results <- temp$means
+    if(!is.null(temp$df_results))  bootstrapped_results <- temp$df_results$means
 
     bootstrapped_results
   }

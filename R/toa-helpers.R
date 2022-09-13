@@ -123,39 +123,6 @@ get_df_means <- function(df_DEG){
   return(df.means)
 }
 
-toa_lite <- function(x, genes, toa_ref, cov = NULL, foldThreshDEG = 1.5){
-
-  #instantiate results list
-  results = NULL
-
-  #get differentially expressed genes
-  df_DEG = get_DEG(x, genes, cov, foldThreshDEG)
-
-
-  if(is.null(df_DEG)){
-    return(results)
-  }
-
-  #identify gene symbols that are present in both the analyzed and reference datasets, and that are up/down regulated
-  df_DEG$ref_matched <- ifelse(df_DEG$gene %in% toa_ref$gene, 1, 0)
-  df_DEG$ref_matched_expressed <- ifelse(df_DEG$ref_matched == 1 & df_DEG$DEG != 0, 1, 0)
-
-  #merge diagnosticity scores
-  df_DEG <- merge(df_DEG, toa_ref, by = "gene", all.x = TRUE)
-
-  #compute mean diagnosticity scores (if any up/down regulated genes could be matched up to the reference data)
-  if(sum(df_DEG$ref_matched_expressed) > 0){
-    df.means <- get_df_means(df_DEG)
-  }else{
-    return(results)
-  }
-
-  #if no failure up to this point, update the results list with computed values
-  results = df.means
-
-  return(results)
-}
-
 cov_to_matrix <- function(cov, x){
 
   if(!is.null(cov)){
