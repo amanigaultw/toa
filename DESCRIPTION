@@ -10,7 +10,7 @@ Description: Offers tools to perform transcriptomics analysis,
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-LazyDataCompression:xz
+LazyDataCompression: xz
 Imports:
     stats,
     RcppArmadillo,
@@ -19,4 +19,4 @@ Imports:
     doSNOW,
     svMisc
 Depends: R (>= 3.5.0)
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.1
