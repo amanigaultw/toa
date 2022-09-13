@@ -37,5 +37,6 @@ toa_result <- toa(x = Chang$stress,
                   toa_ref = toa_ref_epith_mesen,
                   foldThreshDEG = 1.25)
 #toa_boot
-#toa_boot_result <- toa_boot(toa = toa_result)
+toa_boot_result <- toa_boot(toa = toa_result,
+                            n_boot = 10) #few bootstrapped samples for illustration
 }
