@@ -65,7 +65,7 @@ toa_boot <- function(toa, n_boot = 200, progress = TRUE){
   }
 
   #bootstrap loop (multithreaded)
-  Vboot = foreach::foreach(i=1:n_boot, .combine='c', .inorder=FALSE, .export=c('get_DEG'), .options.snow = opts) %dopar% {
+  Vboot = foreach::foreach(i=1:n_boot, .combine='c', .inorder=FALSE, .export=c('toa'), .options.snow = opts) %dopar% {
 
     #assign default bootstrap results
     bootstrapped_results <- rep(NA, 6)
@@ -79,7 +79,7 @@ toa_boot <- function(toa, n_boot = 200, progress = TRUE){
     #get toa means
     temp <- toa(resampled_x, resampled_genes, toa_ref, resampled_cov, foldThreshDEG)
 
-    #update bootstrap results if toa_lite() was successful
+    #update bootstrap results if toa() was successful
     if(!is.null(temp$df_results))  bootstrapped_results <- temp$df_results$means
 
     bootstrapped_results
