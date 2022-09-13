@@ -7,11 +7,11 @@
 toa_boot(toa, n_boot = 200, progress = TRUE)
 }
 \arguments{
-\item{toa}{a toa result object produced using \code{toa()}}
+\item{toa}{a toa result object produced using \code{toa()}.}
 
-\item{n_boot}{the number of bootstrap sample to run}
+\item{n_boot}{the number of bootstrap sample to run.}
 
-\item{progress}{a bool indicating whether a progress bar should be shown}
+\item{progress}{a bool indicating whether a progress bar should be shown.}
 }
 \value{
 a list object containing:
@@ -37,6 +37,6 @@ toa_result <- toa(x = Chang$stress,
                   toa_ref = toa_ref_epith_mesen,
                   foldThreshDEG = 1.25)
 #toa_boot
-toa_boot_result <- toa_boot(toa = toa_result,
-                            n_boot = 10) #few bootstrapped samples for illustration
+#toa_boot_result <- toa_boot(toa = toa_result,
+#                            n_boot = 400) #few bootstrapped samples for illustration
 }

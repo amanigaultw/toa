@@ -2,9 +2,9 @@
 #'
 #' performs transcript origin analysis, including bootstrapped estimation of mean diagnosticity scores; will use n-1 available CPU cores by default.
 #'
-#' @param toa a toa result object produced using \code{toa()}
-#' @param n_boot the number of bootstrap sample to run
-#' @param progress a bool indicating whether a progress bar should be shown
+#' @param toa a toa result object produced using \code{toa()}.
+#' @param n_boot the number of bootstrap sample to run.
+#' @param progress a bool indicating whether a progress bar should be shown.
 #' @return a list object containing:
 #' \enumerate{
 #'   \item a results data frame.
@@ -24,16 +24,13 @@
 #'                   toa_ref = toa_ref_epith_mesen,
 #'                   foldThreshDEG = 1.25)
 #' #toa_boot
-#' toa_boot_result <- toa_boot(toa = toa_result,
-#'                             n_boot = 10) #few bootstrapped samples for illustration
+#' #toa_boot_result <- toa_boot(toa = toa_result,
+#' #                            n_boot = 400) #few bootstrapped samples for illustration
 #' @export
 toa_boot <- function(toa, n_boot = 200, progress = TRUE){
 
   #verify inputs
-  if(class(toa) != "toa" | is.null(toa$df_results) | is.null(toa$df_DEG)) stop("invalid toa parameters; check whether toa() produced a valid result object")
-
-  #re-use toa inputs
-  list2env(toa$inputs, envir = environment())
+  if(!inherits(toa, "toa") | is.null(toa$df_results) | is.null(toa$df_DEG)) stop("invalid toa input parameters; check whether toa() produced a valid result object")
 
   #instantiate results list
   results <- list(df_results = NULL,
@@ -43,8 +40,12 @@ toa_boot <- function(toa, n_boot = 200, progress = TRUE){
   #get non bootstrapped means
   non_boot_means <- toa$df_results
 
-  #force cov to matrix if not null
-  cov <- cov_to_matrix(cov, x)
+  #reuse toa inputs
+  x <- genes <- cov <- toa_ref <- foldThreshDEG <- NULL #first bind them locally
+  list2env(toa$inputs, envir = environment())
+
+  #deal with single cov input
+  cov <- cov_to_matrix(toa$inputs$cov, toa$inputs$x)
 
   #reset any previous multithreading settings
   env <- utils::getFromNamespace(".foreachGlobals", "foreach")
