@@ -44,7 +44,7 @@ toa <- function(x, genes, toa_ref, cov = NULL, foldThreshDEG = 1.5){
   df_DEG = get_DEG(x, genes, cov, foldThreshDEG)
 
   if(is.null(df_DEG)){
-    warning("ERROR: get_DEG failed")
+    warning("get_DEG failed")
     return(results)
   }
 
@@ -59,7 +59,7 @@ toa <- function(x, genes, toa_ref, cov = NULL, foldThreshDEG = 1.5){
   if(sum(df_DEG$ref_matched_expressed) > 0){
     df.means <- get_df_means(df_DEG)
   }else{
-    print("ERROR: could not aggregate diagnosticity score across up and down regulated genes matched to the reference dataset; check how many genes are ref-matched and up/down regulated")
+    print("could not aggregate diagnosticity score across up and down regulated genes matched to the reference dataset; check how many genes are ref-matched and up/down regulated")
     return(results)
   }
 

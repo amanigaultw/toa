@@ -42,6 +42,18 @@ valid_input_toa_ref <- function(toa_ref){
   return(TRUE)
 }
 
+valid_input_tfbm_ref <- function(tfbm_ref){
+
+  for(i in 1:length(tfbm_ref)){
+    if(colnames(tfbm_ref[[i]])[1] != "gene" | ncol(tfbm_ref[[i]]) < 1){
+      warning("invalid tfbm_ref input")
+      return(FALSE)
+    }
+  }
+
+  return(TRUE)
+}
+
 get_gene_counts <- function(df_DEG){
 
   #save counts of up and down regulated genes before accounting for whether their gene symbol can be matched to a TOA diagnosticity score
@@ -151,4 +163,27 @@ cov_to_matrix <- function(cov, x){
   }
 
   return(cov)
+}
+
+get_ratios <- function(df_DEG, tfbm_ref){
+
+  df_ratios <- NULL
+
+  temp <- merge(df_DEG[df_DEG$DEG != 0, ], tfbm_ref[[1]], by = "gene")
+  if(nrow(temp) == 0){
+    warning("no overlap between genes included in tfbm ref and up/down regulated genes")
+    return(df_ratios)
+  }
+
+  ratios <- list()
+  for(i in 1:length(tfbm_ref)){
+    temp <- merge(df_DEG[df_DEG$DEG != 0, ], tfbm_ref[[i]], by = "gene")
+    temp <- stats::aggregate(temp[,-(1:3)], list(temp$DEG), function(x) mean(x, na.rm = TRUE))
+    temp[temp[,] == 0] <- NA
+    ratios[[i]] <- temp[temp[,1] == 1, -1] / temp[temp[,1] == -1, -1]
+    names(ratios)[i] <- names(tfbm_ref)[i]
+  }
+  df_ratios <- do.call(rbind, ratios)
+
+  return(df_ratios)
 }
