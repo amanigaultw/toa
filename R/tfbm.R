@@ -1,4 +1,4 @@
-#' Transcript Origin Analysis for Transcription Factor Binding Motif
+#' Transcript Origin Analysis for Transcription Factor Binding Motifs
 #'
 #' performs transcript origin analysis for Transcription Factor Binding Motif without bootstrapped estimates of mean diagnosticity scores.
 #'

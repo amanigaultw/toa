@@ -2,7 +2,7 @@
 % Please edit documentation in R/tfbm.R
 \name{tfbm}
 \alias{tfbm}
-\title{Transcript Origin Analysis for Transcription Factor Binding Motif}
+\title{Transcript Origin Analysis for Transcription Factor Binding Motifs}
 \usage{
 tfbm(x, genes, tfbm_ref, cov = NULL, foldThreshDEG = 1.5)
 }

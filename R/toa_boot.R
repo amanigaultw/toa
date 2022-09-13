@@ -9,6 +9,7 @@
 #' \enumerate{
 #'   \item a results data frame.
 #'   \item a matrix containing bootstrapped mean diagnosticity score estimates \code{boot}.
+#'   \item a list of input arguments.
 #' }
 #' @examples
 #' #load example data
