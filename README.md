@@ -48,9 +48,5 @@ toa_result <- toa(x = Chang$stress,
 toa_result$df_results
 
 #toa_boot (produces bootstrap estimates of mean diagnosticity scores)
-toa_boot_result <- toa_boot(x = Chang$stress, 
-                            genes = subset(Chang, select = -stress), 
-                            toa_ref = toa_ref_epith_mesen, 
-                            foldThreshDEG = 1.25)
-toa_boot_result$df_results
+toa_boot_result <- toa_boot(toa = toa_result)
 ```
