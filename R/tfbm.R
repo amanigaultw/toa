@@ -4,6 +4,7 @@
 #'
 #' @inheritParams get_DEG
 #' @param tfbm_ref a list object containing several tfbm reference data frames; the first column of each data frame must contain gene symbols and be named "gene"
+#' @param lite a bool indicating whether a stripped down version of the function should be run; FALSE by default.
 #' @return tfbm returns an object of class "tfbm"
 #'
 #' An object of class "tfbm" is a list containing:
@@ -30,14 +31,14 @@
 tfbm <- function(x, genes, tfbm_ref, cov = NULL, foldThreshDEG = 1.5, lite = FALSE){
 
   #log inputs
-  if(lite = FALSE) inputs = as.list(environment())
+  if(lite == FALSE) inputs = as.list(environment())
 
   #instantiate tfbm result object
   results <- list(df_results = NULL,
                   df_DEG = NULL,
                   df_ratios = NULL,
                   inputs = NULL)
-  if(lite = FALSE) results$inputs = inputs
+  if(lite == FALSE) results$inputs = inputs
   class(results) <- "tfbm"
 
   #check inputs
@@ -73,7 +74,7 @@ tfbm <- function(x, genes, tfbm_ref, cov = NULL, foldThreshDEG = 1.5, lite = FAL
 
   #if no failure up to this point, update the results list with computed values
   results$df_results <- df_results
-  if(lite = FALSE){
+  if(lite == FALSE){
     results$df_DEG <- df_DEG
     results$df_ratios <- df_ratios
   }
