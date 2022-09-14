@@ -11,6 +11,8 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 LazyDataCompression: xz
+biocViews:
+	SharedObject
 Imports:
     stats,
     RcppArmadillo,

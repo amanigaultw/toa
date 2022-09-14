@@ -44,6 +44,9 @@ tfbm_boot <- function(tfbm, n_boot = 200, progress = TRUE){
   x <- genes <- cov <- tfbm_ref <- foldThreshDEG <- NULL #first bind them locally
   list2env(tfbm$inputs, envir = environment())
 
+  #share tfbm_ref object
+  shared_tfbm_ref <- SharedObject::share(tfbm_ref)
+
   #deal with single cov input
   cov <- cov_to_matrix(tfbm$inputs$cov, tfbm$inputs$x)
 
@@ -77,7 +80,7 @@ tfbm_boot <- function(tfbm, n_boot = 200, progress = TRUE){
     resampled_cov <- cov[resampled_rows, ]
 
     #get tfbm means
-    temp <- toa::tfbm(resampled_x, resampled_genes, tfbm_ref, resampled_cov, foldThreshDEG, TRUE)
+    temp <- toa::tfbm(resampled_x, resampled_genes, shared_tfbm_ref, resampled_cov, foldThreshDEG, TRUE)
 
     #update bootstrap results if tfbm() was successful
     if(!is.null(temp$df_results))  bootstrapped_results <- temp$df_results$log2_mean_fold_diff
@@ -119,8 +122,7 @@ tfbm_boot <- function(tfbm, n_boot = 200, progress = TRUE){
                            valid_boot_samples = N_valid_boot_resamples)
 
   #print results
-  print(paste0("On average, ", round(mean(N_valid_boot_resamples),2), " out of ",  n_boot, " bootstrap resamples produced valid mean diagnosticity scores"))
-  print(df_results)
+  print(paste0("On average, ", round(mean(N_valid_boot_resamples),2), " out of ",  n_boot, " bootstrap resamples produced valid mean ratios"))
 
   #if no failure up to this point, update the results list with computed values
   results$df_results <- df_results
