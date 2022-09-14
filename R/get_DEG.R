@@ -40,7 +40,7 @@ get_DEG <- function(x, genes, cov = NULL, foldThreshDEG = 1.5){
 
   #generate a dataframe containing gene symbols, regression coefficients and DEG
   df_DEG = data.frame(gene = colnames(genes),
-                      dif = round(dif, 12),
+                      dif = dif,
                       DEG = sign(dif)*(abs(dif) > log2(foldThreshDEG)))
 
   return(df_DEG)
