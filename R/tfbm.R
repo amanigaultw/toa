@@ -27,13 +27,17 @@
 #' #                    cov = NULL,
 #' #                    foldThreshDEG = 1.25)
 #' @export
-tfbm <- function(x, genes, tfbm_ref, cov = NULL, foldThreshDEG = 1.5){
+tfbm <- function(x, genes, tfbm_ref, cov = NULL, foldThreshDEG = 1.5, lite = FALSE){
+
+  #log inputs
+  if(lite = FALSE) inputs = as.list(environment())
 
   #instantiate tfbm result object
   results <- list(df_results = NULL,
                   df_DEG = NULL,
                   df_ratios = NULL,
-                  inputs = as.list(environment()))
+                  inputs = NULL)
+  if(lite = FALSE) results$inputs = inputs
   class(results) <- "tfbm"
 
   #check inputs
@@ -69,8 +73,10 @@ tfbm <- function(x, genes, tfbm_ref, cov = NULL, foldThreshDEG = 1.5){
 
   #if no failure up to this point, update the results list with computed values
   results$df_results <- df_results
-  results$df_DEG <- df_DEG
-  results$df_ratios <- df_ratios
+  if(lite = FALSE){
+    results$df_DEG <- df_DEG
+    results$df_ratios <- df_ratios
+  }
 
   return(results)
 }
