@@ -77,7 +77,7 @@ tfbm_boot <- function(tfbm, n_boot = 200, progress = TRUE){
     resampled_cov <- cov[resampled_rows, ]
 
     #get tfbm means
-    temp <- toa::tfbm(resampled_x, resampled_genes, tfbm_ref, resampled_cov, foldThreshDEG)
+    temp <- toa::tfbm(resampled_x, resampled_genes, tfbm_ref, resampled_cov, foldThreshDEG, lite = TRUE)
 
     #update bootstrap results if tfbm() was successful
     if(!is.null(temp$df_results))  bootstrapped_results <- temp$df_results$log2_mean_fold_diff
