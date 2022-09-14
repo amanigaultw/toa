@@ -105,17 +105,16 @@ tfbm_boot <- function(tfbm, n_boot = 200, progress = TRUE){
   N_valid_boot_resamples = apply(boot, 1, function(x) sum(!is.na(x) & !is.nan(x)))
 
   #compute bootstrapped estimates and stats
-  boot_log2_mean <- apply(boot, 1, function(x) mean(x, na.rm = TRUE))
-  boot_mean <- 2^boot_log2_mean
-  boot_se <- apply(boot[], 1, function(x) stats::sd(2^x, na.rm = TRUE))
-  boot_z = boot_mean / boot_se
-  boot_pValue = 2*stats::pnorm(q = abs(boot_z), lower.tail = FALSE)
+  boot_log2_mean <- non_boot_means$log2_mean_fold_diff
+  boot_log2_se <- apply(boot, 1, function(x) stats::sd(x, na.rm = TRUE))
+  boot_log2_z = boot_log2_mean / boot_log2_se
+  boot_log2_pValue = 2*stats::pnorm(q = abs(boot_log2_z), lower.tail = FALSE)
 
   #create results dataframe
   df_results <- data.frame(non_boot_means,
-                           boot_se = boot_se,
-                           boot_z = boot_z,
-                           boot_pValue = boot_pValue,
+                           boot_log2_se = boot_log2_se,
+                           boot_log2_z = boot_log2_z,
+                           boot_log2_pValue = boot_log2_pValue,
                            valid_boot_samples = N_valid_boot_resamples)
 
   #print results
