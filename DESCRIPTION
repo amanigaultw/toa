@@ -4,9 +4,9 @@ Title: Transcript Origin Analysis
 Version: 0.1.0
 Author: Andrew Manigault
 Maintainer: Andrew Manigault <andrew_manigault@brown.edu>
-Description: Offers tools to perform transcriptomics analysis, 
-   including Transcript Origin Analysis and related tools to 
-   ease management of RNA transcription data.
+Description: Offers tools to perform transcriptomic analyses, 
+   including Transcript Origin Analysis. Some transcription data
+   management tools are also included.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
