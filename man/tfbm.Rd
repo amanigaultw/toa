@@ -4,7 +4,7 @@
 \alias{tfbm}
 \title{Transcript Origin Analysis for Transcription Factor Binding Motifs}
 \usage{
-tfbm(x, genes, tfbm_ref, cov = NULL, foldThreshDEG = 1.5)
+tfbm(x, genes, tfbm_ref, cov = NULL, foldThreshDEG = 1.5, lite = FALSE)
 }
 \arguments{
 \item{x}{a numeric vector of values; the predictor variable of interest.}
@@ -16,6 +16,8 @@ tfbm(x, genes, tfbm_ref, cov = NULL, foldThreshDEG = 1.5)
 \item{cov}{a numeric vector/matrix of values, where columns are individual covariate measures; if NULL, unadjusted regression coefficients (dif) are produced.}
 
 \item{foldThreshDEG}{the X-fold expression threshold to be exceeded for a given gene to be considered differentially expressed.}
+
+\item{lite}{a bool indicating whether a stripped down version of the function should be run; FALSE by default.}
 }
 \value{
 tfbm returns an object of class "tfbm"

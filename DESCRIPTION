@@ -12,13 +12,13 @@ Encoding: UTF-8
 LazyData: true
 LazyDataCompression: xz
 biocViews:
-	SharedObject
 Imports:
     stats,
     RcppArmadillo,
     doParallel,
     foreach,
     doSNOW,
-    svMisc
+    svMisc,
+	SharedObject
 Depends: R (>= 3.5.0)
 RoxygenNote: 7.2.1
