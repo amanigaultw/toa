@@ -38,7 +38,8 @@ performs transcript origin analysis for Transcription Factor Binding Motif witho
 data("Chang")
 
 #load a tfbm database from another repo (because it is >27MB)
-#Rfssa::load_github_data("https://github.com/amanigaultw/TELiS/blob/main/HumanTransfacTELiS2019.RData")
+#library(Rfssa)
+#load_github_data("https://github.com/amanigaultw/TELiS/blob/main/HumanTransfacTELiS2019.RData")
 
 #tfbm
 #tfbm_result <- tfbm(x <- Chang[,1],
