@@ -6,6 +6,7 @@
 #' @param genes a numeric matrix of gene expression values, where columns are individual genes.
 #' @param cov a numeric vector/matrix of values, where columns are individual covariate measures; if NULL, unadjusted regression coefficients (dif) are produced.
 #' @param foldThreshDEG the X-fold expression threshold to be exceeded for a given gene to be considered differentially expressed.
+#' @param geneScreenSD minimum gene expression SD; genes that show expression variability below threshold are excluded.
 #' @return a data frame containing gene symbols, raw regression coefficients, and a DEG variable; DEG values indicate whether a given gene showed expression values beyond threshold (1 = increased; -1 = decreased; 0 = below threshold).
 #' @examples
 #' #load example data
@@ -16,7 +17,7 @@
 #'                       foldThreshDEG = 1.25)
 #' table(DEG_result$DEG)
 #' @export
-get_DEG <- function(x, genes, cov = NULL, foldThreshDEG = 1.5){
+get_DEG <- function(x, genes, cov = NULL, foldThreshDEG = 1.5, geneScreenSD = 0){
 
   df_DEG <- NULL
 
@@ -30,6 +31,10 @@ get_DEG <- function(x, genes, cov = NULL, foldThreshDEG = 1.5){
   }else{
     X_vars <- cbind(x, cov)
   }
+
+  #screen out genes with expression variability below threshold
+  keep <- apply(genes, 2, function(x) ifelse(sd(x, na.rm = TRUE) > geneScreenSD, TRUE, FALSE))
+  genes <- genes[,keep]
 
   #run fastLmPure regressions for each gene and save only the regression coefficient of the predictor variable
   dif = numeric(ncol(genes))
