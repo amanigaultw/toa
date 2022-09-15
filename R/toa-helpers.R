@@ -155,15 +155,15 @@ get_ratios <- function(df_DEG, tfbm_ref){
   return(df_ratios)
 }
 
-TELiS_to_big_mem <- function(TELiS){
-
-  bm <- list()
-  for(i in 1:length(TELiS)){
-    temp <- TELiS[[i]]
-    row.names(temp) <- temp[,1]
-    temp <- temp[,-1]
-    bm[[i]] <- bigmemory::as.big.matrix(as.matrix(temp))
-  }
-
-  return(bm)
-}
+# TELiS_to_big_mem <- function(TELiS){
+#
+#   bm <- list()
+#   for(i in 1:length(TELiS)){
+#     temp <- TELiS[[i]]
+#     row.names(temp) <- temp[,1]
+#     temp <- temp[,-1]
+#     bm[[i]] <- bigmemory::as.big.matrix(as.matrix(temp))
+#   }
+#
+#   return(bm)
+# }

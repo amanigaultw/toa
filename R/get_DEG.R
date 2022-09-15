@@ -33,7 +33,7 @@ get_DEG <- function(x, genes, cov = NULL, foldThreshDEG = 1.5, geneScreenSD = 0)
   }
 
   #screen out genes with expression variability below threshold
-  keep <- apply(genes, 2, function(x) ifelse(sd(x, na.rm = TRUE) > geneScreenSD, TRUE, FALSE))
+  keep <- apply(genes, 2, function(x) ifelse(stats::sd(x, na.rm = TRUE) > geneScreenSD, TRUE, FALSE))
   genes <- genes[,keep]
 
   #run fastLmPure regressions for each gene and save only the regression coefficient of the predictor variable
