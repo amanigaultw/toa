@@ -1,11 +1,10 @@
 Package: toa
 Title: Transcript Origin Analysis
 Version: 0.0.0.9000
-Authors@R: 
-    person("Andrew", "Manigault", , "andrew_manigault@brown.edu", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0003-4197-1295"))
-Description: Offers tools to perform transcriptomic analyses, 
-   including Transcript Origin Analysis. Some transcription data
+Author: Andrew Manigault <andrew_manigault@brown.edu>
+Maintainer: Andrew Manigault <andrew_manigault@brown.edu> 
+Description: Offers tools to perform analysis of microarray data, 
+   including Transcript Origin Analysis. Some microarray data
    management tools are also included.
 License: MIT + file LICENSE
 Encoding: UTF-8
