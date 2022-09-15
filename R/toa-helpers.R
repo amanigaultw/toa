@@ -45,7 +45,7 @@ valid_input_toa_ref <- function(toa_ref){
 valid_input_tfbm_ref <- function(tfbm_ref){
 
   for(i in 1:length(tfbm_ref)){
-    if(colnames(tfbm_ref[[i]])[1] != "gene" | ncol(tfbm_ref[[i]]) < 1){
+    if(!is.matrix(tfbm_ref[[i]])){
       warning("invalid tfbm_ref input")
       return(FALSE)
     }
@@ -153,4 +153,17 @@ get_ratios <- function(df_DEG, tfbm_ref){
   df_ratios <- do.call(rbind, ratios)
 
   return(df_ratios)
+}
+
+TELiS_to_big_mem <- function(TELiS){
+
+  bm <- list()
+  for(i in 1:length(TELiS)){
+    temp <- TELiS[[i]]
+    row.names(temp) <- temp[,1]
+    temp <- temp[,-1]
+    bm[[i]] <- bigmemory::as.big.matrix(as.matrix(temp))
+  }
+
+  return(bm)
 }
