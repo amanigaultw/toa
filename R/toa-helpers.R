@@ -45,7 +45,7 @@ valid_input_toa_ref <- function(toa_ref){
 valid_input_tfbm_ref <- function(tfbm_ref){
 
   for(i in 1:length(tfbm_ref)){
-    if(!is.matrix(tfbm_ref[[i]])){
+    if(colnames(tfbm_ref[[i]])[1] != "gene" | ncol(tfbm_ref[[i]]) < 1){
       warning("invalid tfbm_ref input")
       return(FALSE)
     }
