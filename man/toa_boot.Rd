@@ -25,6 +25,7 @@ a list object containing:
 performs transcript origin analysis, including bootstrapped estimation of mean diagnosticity scores; will use n-1 available CPU cores by default.
 }
 \examples{
+\dontrun{
 #load example data
 data("Chang")
 data("epith_mesen_ref_raw")
@@ -38,6 +39,7 @@ toa_result <- toa(x = Chang$stress,
                   toa_ref = toa_ref_epith_mesen,
                   foldThreshDEG = 1.25)
 #toa_boot
-#toa_boot_result <- toa_boot(toa = toa_result,
-#                            n_boot = 400) #few bootstrapped samples for illustration
+toa_boot_result <- toa_boot(toa = toa_result,
+                            n_boot = 400)
+}
 }

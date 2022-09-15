@@ -8,25 +8,27 @@
 #' @return a list object containing:
 #' \enumerate{
 #'   \item a results data frame.
-#'   \item a matrix containing bootstrapped mean diagnosticity score estimates \code{boot}.
+#'   \item a matrix containing bootstrapped tfbm ratios.
 #'   \item a list of input arguments.
 #' }
 #' @examples
+#' \dontrun{
 #' #load example data
 #' data("Chang")
 #'
 #' #load a tfbm database from another repo (because it is >27MB)
-#' #library(Rfssa)
-#' #load_github_data("https://github.com/amanigaultw/TELiS/blob/main/HumanTransfacTELiS2019.RData")
+#' library(Rfssa)
+#' load_github_data("https://github.com/amanigaultw/TELiS/blob/main/HumanTransfacTELiS2019.RData")
 #'
 #' #tfbm
-#' #tfbm_result <- tfbm(x <- Chang[,1],
-#' #                    genes <- Chang[,-1],
-#' #                    tfbm_ref = HumanTransfacTELiS2019,
-#' #                    cov = NULL,
-#' #                    foldThreshDEG = 1.25)
-#' #tfbm_boot
-#' #tfbm_boot_results <- tfbm_boot(tfbm_result)
+#' tfbm_result <- tfbm(x <- Chang[,1],
+#'                     genes <- Chang[,-1],
+#'                     tfbm_ref = HumanTransfacTELiS2019,
+#'                     cov = NULL,
+#'                     foldThreshDEG = 1.25)
+#' tfbm_boot
+#' tfbm_boot_results <- tfbm_boot(tfbm_result)
+#' }
 #' @export
 tfbm_boot <- function(tfbm, n_boot = 200, progress = TRUE){
 

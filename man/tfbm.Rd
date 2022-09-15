@@ -31,20 +31,22 @@ An object of class "tfbm" is a list containing:
 }
 }
 \description{
-performs transcript origin analysis for Transcription Factor Binding Motif without bootstrapped estimates of mean diagnosticity scores.
+performs transcript origin analysis for Transcription Factor Binding Motif without bootstrapped estimates of tfbm ratios.
 }
 \examples{
+\dontrun{
 #load example data
 data("Chang")
 
 #load a tfbm database from another repo (because it is >27MB)
-#library(Rfssa)
-#load_github_data("https://github.com/amanigaultw/TELiS/blob/main/HumanTransfacTELiS2019.RData")
+library(Rfssa)
+load_github_data("https://github.com/amanigaultw/TELiS/blob/main/HumanTransfacTELiS2019.RData")
 
 #tfbm
-#tfbm_result <- tfbm(x <- Chang[,1],
-#                    genes <- Chang[,-1],
-#                    tfbm_ref = HumanTransfacTELiS2019,
-#                    cov = NULL,
-#                    foldThreshDEG = 1.25)
+tfbm_result <- tfbm(x <- Chang[,1],
+                    genes <- Chang[,-1],
+                    tfbm_ref = HumanTransfacTELiS2019,
+                    cov = NULL,
+                    foldThreshDEG = 1.25)
+}
 }

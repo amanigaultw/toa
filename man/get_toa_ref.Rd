@@ -30,10 +30,12 @@ a data frame containing unique gene symbols and average diagnosticity scores.
 computes diagnosticity scores for a given set of treatment v. control observations, typically replicates.
 }
 \examples{
+\dontrun{
 #load example data
 data("epith_mesen_ref_raw")
 #get diagnosticity scores
 toa_ref_epith_mesen <- get_toa_ref(gene_symbols = epith_mesen_ref_raw[,1],
                                    exp_treatment = epith_mesen_ref_raw[,2:11],
                                    exp_control = epith_mesen_ref_raw[,12:21])
+}
 }

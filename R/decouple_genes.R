@@ -1,6 +1,7 @@
-#' decouple gene expression matrices/data frame where some rows correspond to multiple gene symbols
+#' decouples multi-gene rows
 #'
-#' produces a data frame containing one row per gene symbols, where expression values are identical for previously coupled symbols.
+#' produces a data frame containing one row per gene symbols, where expression values
+#' are identical for previously coupled symbols.
 #'
 #' @param df a data frame or matrix containing gene symbols and gene expression values.
 #' @param sep a string indicating how multi-gene symbols are separated (e.g., "///").
@@ -9,12 +10,14 @@
 #' @param progress bool indicating whether to display function progress.
 #' @return a data frame containing one row per gene symbols, where expression values are identical for previously coupled symbols.
 #' @examples
+#' \dontrun{
 #' #load example data
 #' data("HumanCD14CD16NegVsPosVsDC_3Reps_Ziegler")
-#' #decouple_multi_gene_rows
-#' decoupled_data <- decouple_multi_gene_rows(HumanCD14CD16NegVsPosVsDC_3Reps_Ziegler)
+#' #decouple_genes
+#' decoupled_data <- decouple_genes(HumanCD14CD16NegVsPosVsDC_3Reps_Ziegler)
+#' }
 #' @export
-decouple_multi_gene_rows <- function(df, sep = "///", gene_col = 1, header = TRUE, progress = TRUE){
+decouple_genes <- function(df, sep = "///", gene_col = 1, header = TRUE, progress = TRUE){
 
   df <- as.data.frame(df)
 

@@ -1,6 +1,6 @@
 #' Transcript Origin Analysis for Transcription Factor Binding Motifs
 #'
-#' performs transcript origin analysis for Transcription Factor Binding Motif without bootstrapped estimates of mean diagnosticity scores.
+#' performs transcript origin analysis for Transcription Factor Binding Motif without bootstrapped estimates of tfbm ratios.
 #'
 #' @inheritParams get_DEG
 #' @param tfbm_ref a list object containing several tfbm reference data frames; the first column of each data frame must contain gene symbols and be named "gene"
@@ -15,19 +15,21 @@
 #'   \item a list of input arguments.
 #' }
 #' @examples
+#' \dontrun{
 #' #load example data
 #' data("Chang")
 #'
 #' #load a tfbm database from another repo (because it is >27MB)
-#' #library(Rfssa)
-#' #load_github_data("https://github.com/amanigaultw/TELiS/blob/main/HumanTransfacTELiS2019.RData")
+#' library(Rfssa)
+#' load_github_data("https://github.com/amanigaultw/TELiS/blob/main/HumanTransfacTELiS2019.RData")
 #'
 #' #tfbm
-#' #tfbm_result <- tfbm(x <- Chang[,1],
-#' #                    genes <- Chang[,-1],
-#' #                    tfbm_ref = HumanTransfacTELiS2019,
-#' #                    cov = NULL,
-#' #                    foldThreshDEG = 1.25)
+#' tfbm_result <- tfbm(x <- Chang[,1],
+#'                     genes <- Chang[,-1],
+#'                     tfbm_ref = HumanTransfacTELiS2019,
+#'                     cov = NULL,
+#'                     foldThreshDEG = 1.25)
+#' }
 #' @export
 tfbm <- function(x, genes, tfbm_ref, cov = NULL, foldThreshDEG = 1.5, lite = FALSE){
 

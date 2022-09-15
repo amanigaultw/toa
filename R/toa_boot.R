@@ -12,6 +12,7 @@
 #'   \item a list of input arguments.
 #' }
 #' @examples
+#' \dontrun{
 #' #load example data
 #' data("Chang")
 #' data("epith_mesen_ref_raw")
@@ -25,8 +26,9 @@
 #'                   toa_ref = toa_ref_epith_mesen,
 #'                   foldThreshDEG = 1.25)
 #' #toa_boot
-#' #toa_boot_result <- toa_boot(toa = toa_result,
-#' #                            n_boot = 400) #few bootstrapped samples for illustration
+#' toa_boot_result <- toa_boot(toa = toa_result,
+#'                             n_boot = 400)
+#' }
 #' @export
 toa_boot <- function(toa, n_boot = 200, progress = TRUE){
 
