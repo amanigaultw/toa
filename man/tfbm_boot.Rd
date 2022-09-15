@@ -16,9 +16,9 @@ tfbm_boot(tfbm, n_boot = 200, progress = TRUE)
 \value{
 a list object containing:
 \enumerate{
-  \item a results data frame.
-  \item a matrix containing bootstrapped mean diagnosticity score estimates \code{boot}.
-  \item a list of input arguments.
+\item a results data frame.
+\item a matrix containing bootstrapped mean diagnosticity score estimates \code{boot}.
+\item a list of input arguments.
 }
 }
 \description{

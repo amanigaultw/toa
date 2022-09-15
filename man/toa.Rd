@@ -22,9 +22,9 @@ toa returns an object of class "toa"
 
 An object of class "toa" is a list containing:
 \enumerate{
-  \item a results data frame.
-  \item a raw coefficients data frame.
-  \item a list of input arguments.
+\item a results data frame.
+\item a raw coefficients data frame.
+\item a list of input arguments.
 }
 }
 \description{

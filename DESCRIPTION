@@ -7,7 +7,7 @@ Authors@R:
 Description: Offers tools to perform transcriptomic analyses, 
    including Transcript Origin Analysis. Some transcription data
    management tools are also included.
-License: use_mit_license()
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 LazyDataCompression: xz

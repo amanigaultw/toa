@@ -24,10 +24,10 @@ tfbm returns an object of class "tfbm"
 
 An object of class "tfbm" is a list containing:
 \enumerate{
-  \item a results data frame.
-  \item a raw coefficients data frame.
-  \item a raw ratios data frame.
-  \item a list of input arguments.
+\item a results data frame.
+\item a raw coefficients data frame.
+\item a raw ratios data frame.
+\item a list of input arguments.
 }
 }
 \description{
