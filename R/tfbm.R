@@ -52,7 +52,7 @@ tfbm <- function(x, genes, tfbm_ref, cov = NULL, foldThreshDEG = 1.5, lite = FAL
 
   #clean gene symbols
   for(i in 1:length(tfbm_ref)){
-    tfbm_ref[[i]]$gene <- clean_symbols(tfbm_ref[[i]]$gene)
+    tfbm_ref[[i]]$gene <- set_symbols(tfbm_ref[[i]]$gene)
   }
 
   #get differentially expressed genes

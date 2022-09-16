@@ -49,7 +49,7 @@ toa <- function(x, genes, toa_ref, cov = NULL, foldThreshDEG = 1.5){
   }
 
   #clean gene symbols
-  toa_ref$gene <- clean_symbols(toa_ref$gene)
+  toa_ref$gene <- set_symbols(toa_ref$gene)
 
   #identify gene symbols that are present in both the analyzed and reference datasets, and that are up/down regulated
   df_DEG$ref_matched <- ifelse(df_DEG$gene %in% toa_ref$gene, 1, 0)

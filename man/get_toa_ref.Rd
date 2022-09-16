@@ -4,13 +4,7 @@
 \alias{get_toa_ref}
 \title{get reference data needed for Transcript Origin Analysis}
 \usage{
-get_toa_ref(
-  gene_symbols,
-  exp_treatment,
-  exp_control,
-  logZeroSub = 0.001,
-  toupper = TRUE
-)
+get_toa_ref(gene_symbols, exp_treatment, exp_control, logZeroSub = 0.001)
 }
 \arguments{
 \item{gene_symbols}{a character vector containing gene symbols.}

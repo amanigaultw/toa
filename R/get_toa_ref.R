@@ -49,7 +49,7 @@ get_toa_ref <- function(gene_symbols, exp_treatment, exp_control, logZeroSub = .
   colnames(diagnostic_scores)[1] <- "gene"
 
   #clean gene symbols
-  diagnostic_scores$gene <- clean_symbols(diagnostic_scores$gene)
+  diagnostic_scores$gene <- set_symbols(diagnostic_scores$gene)
 
   return(diagnostic_scores)
 }

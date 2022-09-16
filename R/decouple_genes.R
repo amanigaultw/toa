@@ -60,7 +60,7 @@ decouple_genes <- function(df, sep = "///", gene_col = 1, header = TRUE, progres
   df_temp <- do.call(rbind, temp)
 
   #clean gene symbols
-  df_temp[,1] <- clean_symbols(df_temp[,1])
+  df_temp[,1] <- set_symbols(df_temp[,1])
 
   #restore header
   if(header){

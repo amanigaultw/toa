@@ -154,8 +154,3 @@ get_ratios <- function(df_DEG, tfbm_ref){
 
   return(df_ratios)
 }
-
-clean_symbols <- function(gene_symbols){
-  return(trimws(toupper(gene_symbols)))
-}
-

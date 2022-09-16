@@ -33,7 +33,7 @@ get_DEG <- function(x, genes, cov = NULL, foldThreshDEG = 1.5, geneScreenSD = 0)
   }
 
   #clean gene symbols
-  colnames(genes) <- clean_symbols(colnames(genes))
+  colnames(genes) <- set_symbols(colnames(genes))
 
   #screen out genes with expression variability below threshold
   keep <- apply(genes, 2, function(x) ifelse(stats::sd(x, na.rm = TRUE) > geneScreenSD, TRUE, FALSE))
