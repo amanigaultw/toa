@@ -50,6 +50,11 @@ tfbm <- function(x, genes, tfbm_ref, cov = NULL, foldThreshDEG = 1.5, lite = FAL
     return(results)
   }
 
+  #clean gene symbols
+  for(i in 1:length(tfbm_ref)){
+    tfbm_ref[[i]]$gene <- clean_symbols(tfbm_ref[[i]]$gene)
+  }
+
   #get differentially expressed genes
   df_DEG = get_DEG(x, genes, cov, foldThreshDEG)
 

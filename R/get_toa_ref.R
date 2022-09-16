@@ -18,7 +18,7 @@
 #'                                    exp_control = epith_mesen_ref_raw[,12:21])
 #' }
 #' @export
-get_toa_ref <- function(gene_symbols, exp_treatment, exp_control, logZeroSub = .001, toupper = TRUE){
+get_toa_ref <- function(gene_symbols, exp_treatment, exp_control, logZeroSub = .001){
 
   #generate copies of the data
   temp <- cbind(gene_symbols, exp_treatment, exp_control)
@@ -48,8 +48,8 @@ get_toa_ref <- function(gene_symbols, exp_treatment, exp_control, logZeroSub = .
   diagnostic_scores <- stats::aggregate(subset(temp, select = c("DiagnosticityScoresLinear", "DiagnosticityScoresLog")), list(temp[,1]), mean, na.rm = TRUE)
   colnames(diagnostic_scores)[1] <- "gene"
 
-  #ensure that gene symbols are in uppercase
-  diagnostic_scores$gene <- toupper(diagnostic_scores$gene)
+  #clean gene symbols
+  diagnostic_scores$gene <- clean_symbols(diagnostic_scores$gene)
 
   return(diagnostic_scores)
 }

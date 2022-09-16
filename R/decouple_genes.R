@@ -59,6 +59,9 @@ decouple_genes <- function(df, sep = "///", gene_col = 1, header = TRUE, progres
   #generate a dataframe from the list
   df_temp <- do.call(rbind, temp)
 
+  #clean gene symbols
+  df_temp[,1] <- clean_symbols(df_temp[,1])
+
   #restore header
   if(header){
     df_temp <- rbind(temp_row, df_temp)
