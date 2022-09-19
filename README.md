@@ -6,7 +6,7 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-Offers tools to perform transcriptomics analyses, including Transcript Origin Analysis.
+Offers tools to perform transcriptomic analyses, including Transcript Origin Analysis.
 
 ## Installation
 
