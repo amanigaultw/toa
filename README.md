@@ -49,7 +49,11 @@ toa_result$df_results
 
 #toa_boot (produces bootstrap estimates of mean diagnosticity scores)
 toa_boot_result <- toa_boot(toa = toa_result)
+```
 
+Next, we follow up the toa with an analysis of transcription factor binding motifs
+
+``` r
 #load a tfbm database from another repo (because it is >27MB)
 library(Rfssa)
 load_github_data("https://github.com/amanigaultw/TELiS/blob/main/HumanTransfacTELiS2019.RData")
@@ -65,3 +69,4 @@ tfbm_boot_results <- tfbm_boot(tfbm_result)
 
 head(tfbm_boot_results$df_results)
 ```
+
