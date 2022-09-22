@@ -1,6 +1,7 @@
 #' bootstrapped Transcript Origin Analysis
 #'
-#' performs transcript origin analysis, including bootstrapped estimation of mean diagnosticity scores; will use n-1 available CPU cores by default.
+#' performs transcript origin analysis, including bootstrapped estimation of mean
+#' diagnosticity scores; will use n-1 available CPU cores by default.
 #'
 #' @param toa a toa result object produced using \code{toa()}.
 #' @param n_boot the number of bootstrap sample to run.

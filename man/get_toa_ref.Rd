@@ -9,17 +9,21 @@ get_toa_ref(gene_symbols, exp_treatment, exp_control, logZeroSub = 0.001)
 \arguments{
 \item{gene_symbols}{a character vector containing gene symbols.}
 
-\item{exp_treatment}{a numeric matrix of gene expression values, where columns are observations from a treatment/exposure group.}
+\item{exp_treatment}{a numeric matrix of gene expression values, where columns are
+observations from a treatment/exposure group.}
 
-\item{exp_control}{a numeric matrix of gene expression values, where columns are observations from a control/reference group.}
+\item{exp_control}{a numeric matrix of gene expression values, where columns are
+observations from a control/reference group.}
 
-\item{logZeroSub}{the numeric value used to replace expression values that cannot be log2 transformed; .001 by default.}
+\item{logZeroSub}{the numeric value used to replace expression values that cannot be
+log2 transformed; .001 by default.}
 }
 \value{
 a data frame containing unique gene symbols and average diagnosticity scores.
 }
 \description{
-computes diagnosticity scores for a given set of treatment v. control observations, typically replicates.
+computes diagnosticity scores for a given set of treatment v. control observations,
+typically replicates.
 }
 \examples{
 \dontrun{

@@ -11,14 +11,16 @@ decouple_genes(df, sep = "///", gene_col = 1, header = TRUE, progress = TRUE)
 
 \item{sep}{a string indicating how multi-gene symbols are separated (e.g., "///").}
 
-\item{gene_col}{a numeric value indicating the position of the gene symbol column within \code{df}; the first column is used by default.}
+\item{gene_col}{a numeric value indicating the position of the gene symbol column
+within \code{df}; the first column is used by default.}
 
 \item{header}{bool indicating whether the first row of data is a header; TRUE by default.}
 
 \item{progress}{bool indicating whether to display function progress.}
 }
 \value{
-a data frame containing one row per gene symbols, where expression values are identical for previously coupled symbols.
+a data frame containing one row per gene symbols, where expression values are
+identical for previously coupled symbols.
 }
 \description{
 produces a data frame containing one row per gene symbols, where expression values

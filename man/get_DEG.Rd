@@ -11,17 +11,23 @@ get_DEG(x, genes, cov = NULL, foldThreshDEG = 1.5, geneScreenSD = 0)
 
 \item{genes}{a numeric matrix of gene expression values, where columns are individual genes.}
 
-\item{cov}{a numeric vector/matrix of values, where columns are individual covariate measures; if NULL, unadjusted regression coefficients (dif) are produced.}
+\item{cov}{a numeric vector/matrix of values, where columns are individual covariate measures;
+if NULL, unadjusted regression coefficients (dif) are produced.}
 
-\item{foldThreshDEG}{the X-fold expression threshold to be exceeded for a given gene to be considered differentially expressed.}
+\item{foldThreshDEG}{the X-fold expression threshold to be exceeded for a given gene to be
+considered differentially expressed.}
 
-\item{geneScreenSD}{minimum gene expression SD; genes that show expression variability below threshold are excluded.}
+\item{geneScreenSD}{minimum gene expression SD; genes that show expression variability below
+threshold are excluded.}
 }
 \value{
-a data frame containing gene symbols, raw regression coefficients, and a DEG variable; DEG values indicate whether a given gene showed expression values beyond threshold (1 = increased; -1 = decreased; 0 = below threshold).
+a data frame containing gene symbols, raw regression coefficients, and a DEG variable;
+DEG values indicate whether a given gene showed expression values
+beyond threshold (1 = increased; -1 = decreased; 0 = below threshold).
 }
 \description{
-performs regressions to determine which gene show differential expression as a function of x; can adjust for covariates using \code{cov}.
+performs regressions to determine which gene show differential expression as a function of x;
+can adjust for covariates using \code{cov}.
 }
 \examples{
 #load example data

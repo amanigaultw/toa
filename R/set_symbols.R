@@ -1,6 +1,7 @@
 #' reformat gene symbols
 #'
-#' reformats gene symbols such that space characters are omited and all remaining characters are upper case.
+#' reformats gene symbols such that space characters are omitted and all remaining
+#' characters are upper case.
 #'
 #' @param symbols a character vector of gene symbols.
 #' @return a reformatted character vector of gene symbols.

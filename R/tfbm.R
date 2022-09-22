@@ -1,10 +1,13 @@
 #' Transcript Origin Analysis for Transcription Factor Binding Motifs
 #'
-#' performs transcript origin analysis for Transcription Factor Binding Motif without bootstrapped estimates of tfbm ratios.
+#' performs transcript origin analysis for Transcription Factor Binding Motif
+#' without bootstrapped estimates of tfbm ratios.
 #'
 #' @inheritParams get_DEG
-#' @param tfbm_ref a list object containing several tfbm reference data frames; the first column of each data frame must contain gene symbols and be named "gene"
-#' @param lite a bool indicating whether a stripped down version of the function should be run; FALSE by default.
+#' @param tfbm_ref a list object containing several tfbm reference data frames;
+#' the first column of each data frame must contain gene symbols and be named "gene"
+#' @param lite a bool indicating whether a stripped down version of the function
+#' should be run; FALSE by default.
 #' @return tfbm returns an object of class "tfbm"
 #'
 #' An object of class "tfbm" is a list containing:

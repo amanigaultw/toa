@@ -5,10 +5,12 @@
 #'
 #' @param df a data frame or matrix containing gene symbols and gene expression values.
 #' @param sep a string indicating how multi-gene symbols are separated (e.g., "///").
-#' @param gene_col a numeric value indicating the position of the gene symbol column within \code{df}; the first column is used by default.
+#' @param gene_col a numeric value indicating the position of the gene symbol column
+#' within \code{df}; the first column is used by default.
 #' @param header bool indicating whether the first row of data is a header; TRUE by default.
 #' @param progress bool indicating whether to display function progress.
-#' @return a data frame containing one row per gene symbols, where expression values are identical for previously coupled symbols.
+#' @return a data frame containing one row per gene symbols, where expression values are
+#' identical for previously coupled symbols.
 #' @examples
 #' \dontrun{
 #' #load example data

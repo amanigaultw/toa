@@ -22,7 +22,8 @@ a list object containing:
 }
 }
 \description{
-performs transcript origin analysis for Transcription Factor Binding Motif, including bootstrapped estimation of tfbm ratios; will use n-1 available CPU cores by default.
+performs transcript origin analysis for Transcription Factor Binding Motif,
+including bootstrapped estimation of tfbm ratios; will use n-1 available CPU cores by default.
 }
 \examples{
 \dontrun{

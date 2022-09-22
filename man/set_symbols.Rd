@@ -13,7 +13,8 @@ set_symbols(symbols)
 a reformatted character vector of gene symbols.
 }
 \description{
-reformats gene symbols such that space characters are omited and all remaining characters are upper case.
+reformats gene symbols such that space characters are omitted and all remaining
+characters are upper case.
 }
 \examples{
 #load example data

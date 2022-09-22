@@ -1,6 +1,7 @@
 #' bootstrapped Transcript Origin Analysis for Transcription Factor Binding Motifs
 #'
-#' performs transcript origin analysis for Transcription Factor Binding Motif, including bootstrapped estimation of tfbm ratios; will use n-1 available CPU cores by default.
+#' performs transcript origin analysis for Transcription Factor Binding Motif,
+#' including bootstrapped estimation of tfbm ratios; will use n-1 available CPU cores by default.
 #'
 #' @param tfbm a tfbm result object produced using \code{tfbm()}.
 #' @param n_boot the number of bootstrap sample to run.

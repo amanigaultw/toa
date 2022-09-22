@@ -1,11 +1,15 @@
 #' get reference data needed for Transcript Origin Analysis
 #'
-#' computes diagnosticity scores for a given set of treatment v. control observations, typically replicates.
+#' computes diagnosticity scores for a given set of treatment v. control observations,
+#' typically replicates.
 #'
 #' @param gene_symbols a character vector containing gene symbols.
-#' @param exp_treatment a numeric matrix of gene expression values, where columns are observations from a treatment/exposure group.
-#' @param exp_control a numeric matrix of gene expression values, where columns are observations from a control/reference group.
-#' @param logZeroSub the numeric value used to replace expression values that cannot be log2 transformed; .001 by default.
+#' @param exp_treatment a numeric matrix of gene expression values, where columns are
+#' observations from a treatment/exposure group.
+#' @param exp_control a numeric matrix of gene expression values, where columns are
+#' observations from a control/reference group.
+#' @param logZeroSub the numeric value used to replace expression values that cannot be
+#' log2 transformed; .001 by default.
 #' @return a data frame containing unique gene symbols and average diagnosticity scores.
 #' @examples
 #' \dontrun{

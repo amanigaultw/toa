@@ -22,7 +22,8 @@ a list object containing:
 }
 }
 \description{
-performs transcript origin analysis, including bootstrapped estimation of mean diagnosticity scores; will use n-1 available CPU cores by default.
+performs transcript origin analysis, including bootstrapped estimation of mean
+diagnosticity scores; will use n-1 available CPU cores by default.
 }
 \examples{
 \dontrun{
