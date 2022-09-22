@@ -14,8 +14,6 @@ get_toa_ref(gene_symbols, exp_treatment, exp_control, logZeroSub = 0.001)
 \item{exp_control}{a numeric matrix of gene expression values, where columns are observations from a control/reference group.}
 
 \item{logZeroSub}{the numeric value used to replace expression values that cannot be log2 transformed; .001 by default.}
-
-\item{toupper}{bool indicating whether gene symbols should be set to uppercase.}
 }
 \value{
 a data frame containing unique gene symbols and average diagnosticity scores.

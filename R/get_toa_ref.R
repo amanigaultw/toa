@@ -6,7 +6,6 @@
 #' @param exp_treatment a numeric matrix of gene expression values, where columns are observations from a treatment/exposure group.
 #' @param exp_control a numeric matrix of gene expression values, where columns are observations from a control/reference group.
 #' @param logZeroSub the numeric value used to replace expression values that cannot be log2 transformed; .001 by default.
-#' @param toupper bool indicating whether gene symbols should be set to uppercase.
 #' @return a data frame containing unique gene symbols and average diagnosticity scores.
 #' @examples
 #' \dontrun{
