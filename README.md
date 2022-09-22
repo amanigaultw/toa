@@ -61,4 +61,6 @@ tfbm_result <- tfbm(x <- Chang[,1],
                     foldThreshDEG = 1.25)
 
 tfbm_boot_results <- tfbm_boot(tfbm_result)
+
+head(tfbm_boot_results$df_results)
 ```
