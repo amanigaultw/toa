@@ -54,12 +54,13 @@ toa_boot_result <- toa_boot(toa = toa_result)
 library(Rfssa)
 load_github_data("https://github.com/amanigaultw/TELiS/blob/main/HumanTransfacTELiS2019.RData")
 
-#tfbm
+#tfbm (does not produce bootstrap estimates of tfbm ratios)
 tfbm_result <- tfbm(x <- Chang[,1],
                     genes <- Chang[,-1],
                     tfbm_ref = HumanTransfacTELiS2019,
                     foldThreshDEG = 1.25)
 
+#tfbm_boot (produces bootstrap estimates of tfbm ratios)
 tfbm_boot_results <- tfbm_boot(tfbm_result)
 
 head(tfbm_boot_results$df_results)
