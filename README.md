@@ -58,7 +58,6 @@ load_github_data("https://github.com/amanigaultw/TELiS/blob/main/HumanTransfacTE
 tfbm_result <- tfbm(x <- Chang[,1],
                     genes <- Chang[,-1],
                     tfbm_ref = HumanTransfacTELiS2019,
-                    cov = NULL,
                     foldThreshDEG = 1.25)
 
 tfbm_boot_results <- tfbm_boot(tfbm_result)
