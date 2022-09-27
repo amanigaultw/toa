@@ -51,8 +51,5 @@ get_toa_ref <- function(gene_symbols, exp_treatment, exp_control, logZeroSub = .
   diagnostic_scores <- stats::aggregate(subset(temp, select = c("DiagnosticityScoresLinear", "DiagnosticityScoresLog")), list(temp[,1]), mean, na.rm = TRUE)
   colnames(diagnostic_scores)[1] <- "gene"
 
-  #clean gene symbols
-  diagnostic_scores$gene <- set_symbols(diagnostic_scores$gene)
-
   return(diagnostic_scores)
 }
