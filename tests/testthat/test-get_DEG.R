@@ -10,6 +10,5 @@ test_that("get_DEG works", {
   upreg_count <- temp[3]
 
   expect_equal(downreg_count, 123)
-
   expect_equal(upreg_count, 227)
 })
