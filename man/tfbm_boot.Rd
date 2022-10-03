@@ -4,12 +4,10 @@
 \alias{tfbm_boot}
 \title{bootstrapped Transcript Origin Analysis for Transcription Factor Binding Motifs}
 \usage{
-tfbm_boot(tfbm_result, n_boot = 200, verbose = TRUE)
+tfbm_boot(tfbm_result, verbose = TRUE)
 }
 \arguments{
 \item{tfbm_result}{a tfbm result object produced using \code{tfbm()}.}
-
-\item{n_boot}{the number of bootstrap sample to run.}
 
 \item{verbose}{a bool indicating whether a progress bar should be shown.}
 }
@@ -25,10 +23,11 @@ a list object containing:
 performs a bootstrapped variant of transcript origin analysis aimed at determining whether the
 frequency of Transcription Factor Binding Motif is significantly increased/decreased
 among differentially expressed genes. Up to n-1 available CPU cores will be used by default.
+Bootstrapped estimates of the differentially expressed gene set from \code{toa_boot()} are re-used.
 }
 \examples{
 \dontrun{
-#' #load example data
+#load example data
 data("TAU_Trials3_Gene_CPM_Log2")
 data("TAUTrials2022BC_Intervention_Rm1BadQC_RmB14")
 data("HumanM1M2_3Reps_Martinez")

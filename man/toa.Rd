@@ -15,7 +15,22 @@ toa(
 )
 }
 \arguments{
-\item{ref}{a data frame containing gene symbols and diagnosticity scores.}
+\item{DEG_result}{a DEG result object produced using \code{get_DEG()}.}
+
+\item{ref}{a data frame in long format containing gene expression value of the reference data frame.
+See \code{data("HumanM1M2_3Reps_Martinez")} for an example of appropriate formatting.}
+
+\item{type_1_cols}{an integer vector indicating the position of replicates for the first "cell type"/"subject type".}
+
+\item{type_2_cols}{an integer vector indicating the position of replicates for the second "cell type"/"subject type".}
+
+\item{ref_symbol_col}{an integer indicating the position of the gene symbol column in the reference data frame;
+the first column is used by default.}
+
+\item{logZeroSub}{a numeric value used to substitute expression values in the reference data frame that cannot be
+log transformed; .001 is used by default.}
+
+\item{verbose}{a bool indicating whether to print function outputs/info to the console.}
 }
 \value{
 toa returns an object of class "toa"
@@ -43,18 +58,14 @@ data("HumanM1M2_3Reps_Martinez")
 
 #get DEG
 DEG_result <- get_DEG(expression_data = TAU_Trials3_Gene_CPM_Log2,
-exp_symbol_col = 1,
-regressor_matrix = TAUTrials2022BC_Intervention_Rm1BadQC_RmB14,
-reg_id_col = 1,
-foldThreshDEG = 2,
-screenSD = 0,
-verbose = TRUE)
+                      regressor_matrix = TAUTrials2022BC_Intervention_Rm1BadQC_RmB14,
+                      foldThreshDEG = 2)
 
 #get toa
 toa_result <- toa(DEG_result = DEG_result,
-ref = HumanM1M2_3Reps_Martinez,
-type_1_cols = 2:4,
-type_2_cols = 5:7)
+                  ref = HumanM1M2_3Reps_Martinez,
+                  type_1_cols = 2:4,
+                  type_2_cols = 5:7)
 
 toa_result$df_results
 }

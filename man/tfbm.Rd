@@ -25,29 +25,26 @@ An object of class "tfbm" is a list containing:
 \description{
 performs a variant of transcript origin analysis aimed at determining whether the
 frequency of Transcription Factor Binding Motif is significantly increased/decreased
-among differentially expressed genes.
+among differentially expressed genes. Bootstrapped estimates of the differentially expressed
+gene set from \code{toa_boot()} are re-used.
 }
 \examples{
 \dontrun{
-#' #load example data
+#load example data
 data("TAU_Trials3_Gene_CPM_Log2")
 data("TAUTrials2022BC_Intervention_Rm1BadQC_RmB14")
 data("HumanM1M2_3Reps_Martinez")
 
 #get DEG
 DEG_result <- get_DEG(expression_data = TAU_Trials3_Gene_CPM_Log2,
-exp_symbol_col = 1,
-regressor_matrix = TAUTrials2022BC_Intervention_Rm1BadQC_RmB14,
-reg_id_col = 1,
-foldThreshDEG = 2,
-screenSD = 0,
-verbose = TRUE)
+                      regressor_matrix = TAUTrials2022BC_Intervention_Rm1BadQC_RmB14,
+                      foldThreshDEG = 2)
 
 #get toa
 toa_result <- toa(DEG_result = DEG_result,
-ref = HumanM1M2_3Reps_Martinez,
-type_1_cols = 2:4,
-type_2_cols = 5:7)
+                  ref = HumanM1M2_3Reps_Martinez,
+                  type_1_cols = 2:4,
+                  type_2_cols = 5:7)
 
 #get bootstrapped stats
 toa_boot_result <- toa_boot(toa_result)

@@ -11,15 +11,31 @@ get_DEG(
   reg_id_col = 1,
   foldThreshDEG = 1.5,
   screenSD = 0,
-  verbose = FALSE
+  verbose = TRUE
 )
 }
 \arguments{
+\item{expression_data}{a data frame of gene expression values in long format, where one column is gene
+symbols (the first column by default) and other all other columns are subject IDs.
+See \code{data("TAU_Trials3_Gene_CPM_Log2")} for an example of appropriate formatting.}
+
+\item{exp_symbol_col}{an integer indicating the position of the gene symbol column in the expression data frame;
+the first column is used by default.}
+
+\item{regressor_matrix}{a matrix containing subject IDs, a predictor of interest, and covariates of interest (if any).
+The subject ID column position may be altered using the \code{reg_id_col} parameter, but the predictor of interest
+column must precede that of covariates in the matrix. See \code{data("TAUTrials2022BC_Intervention_Rm1BadQC_RmB14")}
+for an example of appropriate formatting.}
+
+\item{reg_id_col}{an integer indicating the position of of the subject ID column in the \code{regressor_matrix}}
+
 \item{foldThreshDEG}{the X-fold expression threshold to be exceeded for a given gene to be
 considered differentially expressed.}
 
 \item{screenSD}{minimum gene expression SD; genes that show expression variability below
 threshold are excluded.}
+
+\item{verbose}{a bool indicating whether to print function outputs/info to the console.}
 }
 \value{
 returns an object of class "DEG"
@@ -33,8 +49,9 @@ DEG values indicate whether a given gene showed expression values beyond thresho
 }
 }
 \description{
-screens the \code{expression_data}, then merges it with the \code{regressor_matrix} and performs regressions to determine which gene show differential expression beyond \code{foldThreshDEG}.
-can adjust for covariates using \code{cov}.
+determines whether genes are differentially expressed. The function first screens the \code{expression_data},
+then merges it with the \code{regressor_matrix} and performs regressions
+to determine which gene show differential expression beyond \code{foldThreshDEG}.
 }
 \examples{
 \dontrun{
@@ -44,12 +61,8 @@ data("TAUTrials2022BC_Intervention_Rm1BadQC_RmB14")
 
 #get DEG
 DEG_result <- get_DEG(expression_data = TAU_Trials3_Gene_CPM_Log2,
-exp_symbol_col = 1,
-regressor_matrix = TAUTrials2022BC_Intervention_Rm1BadQC_RmB14,
-reg_id_col = 1,
-foldThreshDEG = 2,
-screenSD = 0,
-verbose = TRUE)
+                      regressor_matrix = TAUTrials2022BC_Intervention_Rm1BadQC_RmB14,
+                      foldThreshDEG = 2)
 
 #view results
 table(DEG_result$df_DEG$DEG)

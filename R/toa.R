@@ -3,13 +3,16 @@
 #' performs transcript origin analysis without bootstrapped estimates of mean
 #' diagnosticity scores.
 #'
-#' @param DEG_result
-#' @param ref a data frame containing gene symbols and diagnosticity scores.
-#' @param type_1_cols
-#' @param type_2_cols
-#' @param ref_symbol_col
-#' @param logZeroSub
-#' @param verbose
+#' @param DEG_result a DEG result object produced using \code{get_DEG()}.
+#' @param ref a data frame in long format containing gene expression value of the reference data frame.
+#' See \code{data("HumanM1M2_3Reps_Martinez")} for an example of appropriate formatting.
+#' @param type_1_cols an integer vector indicating the position of replicates for the first "cell type"/"subject type".
+#' @param type_2_cols an integer vector indicating the position of replicates for the second "cell type"/"subject type".
+#' @param ref_symbol_col an integer indicating the position of the gene symbol column in the reference data frame;
+#' the first column is used by default.
+#' @param logZeroSub a numeric value used to substitute expression values in the reference data frame that cannot be
+#' log transformed; .001 is used by default.
+#' @param verbose a bool indicating whether to print function outputs/info to the console.
 #' @return toa returns an object of class "toa"
 #'
 #' An object of class "toa" is a list containing:
@@ -30,18 +33,14 @@
 #'
 #' #get DEG
 #' DEG_result <- get_DEG(expression_data = TAU_Trials3_Gene_CPM_Log2,
-#' exp_symbol_col = 1,
-#' regressor_matrix = TAUTrials2022BC_Intervention_Rm1BadQC_RmB14,
-#' reg_id_col = 1,
-#' foldThreshDEG = 2,
-#' screenSD = 0,
-#' verbose = TRUE)
+#'                       regressor_matrix = TAUTrials2022BC_Intervention_Rm1BadQC_RmB14,
+#'                       foldThreshDEG = 2)
 #'
 #' #get toa
 #' toa_result <- toa(DEG_result = DEG_result,
-#' ref = HumanM1M2_3Reps_Martinez,
-#' type_1_cols = 2:4,
-#' type_2_cols = 5:7)
+#'                   ref = HumanM1M2_3Reps_Martinez,
+#'                   type_1_cols = 2:4,
+#'                   type_2_cols = 5:7)
 #'
 #' toa_result$df_results
 #' }
@@ -83,7 +82,7 @@ toa <- function(DEG_result, ref, type_1_cols, type_2_cols, ref_symbol_col = 1, l
   #generate df_results
   df_results <- data.frame(means = unlist(toa_means))
 
-  #
+  #update the result object
   results$df_results <- df_results
   results$pop_gene_symbols <- pop_gene_symbols
   results$raw_diag_scores <- raw_diag_scores

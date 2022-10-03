@@ -10,15 +10,13 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 LazyDataCompression: xz
-biocViews:
 Imports:
     stats,
     RcppArmadillo,
     doParallel,
     foreach,
     doSNOW,
-    svMisc,
-	  SharedObject
+    svMisc
 Depends: R (>= 3.5.0)
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
