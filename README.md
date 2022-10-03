@@ -32,12 +32,8 @@ data("HumanM1M2_3Reps_Martinez")
 
 #get DEG
 DEG_result <- get_DEG(expression_data = TAU_Trials3_Gene_CPM_Log2,
-                      exp_symbol_col = 1,
                       regressor_matrix = TAUTrials2022BC_Intervention_Rm1BadQC_RmB14,
-                      reg_id_col = 1,
-                      foldThreshDEG = 2,
-                      screenSD = 0,
-                      verbose = TRUE)
+                      foldThreshDEG = 2)
 
 #get toa
 toa_result <- toa(DEG_result = DEG_result,
