@@ -2,8 +2,6 @@
 
 export(decouple_genes)
 export(get_DEG)
-export(get_toa_ref)
-export(set_symbols)
 export(tfbm)
 export(tfbm_boot)
 export(toa)

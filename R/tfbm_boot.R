@@ -1,11 +1,12 @@
 #' bootstrapped Transcript Origin Analysis for Transcription Factor Binding Motifs
 #'
-#' performs transcript origin analysis for Transcription Factor Binding Motif,
-#' including bootstrapped estimation of tfbm ratios; will use n-1 available CPU cores by default.
+#' performs a bootstrapped variant of transcript origin analysis aimed at determining whether the
+#' frequency of Transcription Factor Binding Motif is significantly increased/decreased
+#' among differentially expressed genes. Up to n-1 available CPU cores will be used by default.
 #'
-#' @param tfbm a tfbm result object produced using \code{tfbm()}.
+#' @param tfbm_result a tfbm result object produced using \code{tfbm()}.
 #' @param n_boot the number of bootstrap sample to run.
-#' @param progress a bool indicating whether a progress bar should be shown.
+#' @param verbose a bool indicating whether a progress bar should be shown.
 #' @return a list object containing:
 #' \enumerate{
 #'   \item a results data frame.
@@ -14,116 +15,77 @@
 #' }
 #' @examples
 #' \dontrun{
-#' #load example data
-#' data("Chang")
+#' #' #load example data
+#' data("TAU_Trials3_Gene_CPM_Log2")
+#' data("TAUTrials2022BC_Intervention_Rm1BadQC_RmB14")
+#' data("HumanM1M2_3Reps_Martinez")
+#'
+#' #get DEG
+#' DEG_result <- get_DEG(expression_data = TAU_Trials3_Gene_CPM_Log2,
+#' exp_symbol_col = 1,
+#' regressor_matrix = TAUTrials2022BC_Intervention_Rm1BadQC_RmB14,
+#' reg_id_col = 1,
+#' foldThreshDEG = 2,
+#' screenSD = 0,
+#' verbose = TRUE)
+#'
+#' #get toa
+#' toa_result <- toa(DEG_result = DEG_result,
+#' ref = HumanM1M2_3Reps_Martinez,
+#' type_1_cols = 2:4,
+#' type_2_cols = 5:7)
+#'
+#' #get bootstrapped stats
+#' toa_boot_result <- toa_boot(toa_result)
 #'
 #' #load a tfbm database from another repo (because it is >27MB)
 #' library(Rfssa)
 #' load_github_data("https://github.com/amanigaultw/TELiS/blob/main/HumanTransfacTELiS2019.RData")
 #'
 #' #tfbm
-#' tfbm_result <- tfbm(x <- Chang[,1],
-#'                     genes <- Chang[,-1],
-#'                     tfbm_ref = HumanTransfacTELiS2019,
-#'                     cov = NULL,
-#'                     foldThreshDEG = 1.25)
-#' tfbm_boot
-#' tfbm_boot_results <- tfbm_boot(tfbm_result)
+#' tfbm_result <- tfbm(toa_boot_result, HumanTransfacTELiS2019)
+#'
+#' #tfbm boot
+#' tfbm_boot_result <- tfbm_boot(tfbm_result)
+#' View(tfbm_boot_result$df_results)
 #' }
 #' @export
-tfbm_boot <- function(tfbm, n_boot = 200, progress = TRUE){
-
-  #verify inputs
-  if(!inherits(tfbm, "tfbm") | is.null(tfbm$df_results) | is.null(tfbm$df_DEG)) stop("invalid tfbm input parameters; check whether tfbm() produced a valid result object")
+tfbm_boot <- function(tfbm_result, n_boot = 200, verbose = TRUE){
 
   #instantiate results list
   results <- list(df_results = NULL,
                   boot = NULL,
                   inputs = as.list(environment()))
+  class(results) <- "tfbm_boot"
 
-  #get non bootstrapped means
-  non_boot_means <- tfbm$df_results
+  #get boot mat
+  boot_mat <- get_boot_mat(tfbm_result$inputs$toa_boot_result$boot_DEG)
 
-  #reuse tfbm inputs
-  x <- genes <- cov <- tfbm_ref <- foldThreshDEG <- NULL #first bind them locally
-  list2env(tfbm$inputs, envir = environment())
+  #get df_ratios
+  ratio_dfs <- get_ratio_dfs(boot_mat, tfbm_result$inputs$tfbm_ref, verbose)
 
-  #share tfbm_ref object
-  shared_tfbm_ref <- SharedObject::share(tfbm_ref)
+  #aggregate across matrices
+  arr <- array(unlist(ratio_dfs) , c(nrow(ratio_dfs[[1]]), ncol(ratio_dfs[[1]]), length(ratio_dfs)))
+  boot <- apply(arr, 1:2, function(x) mean(x, na.rm = TRUE))
+  colnames(boot) <- colnames(ratio_dfs[[1]])
 
-  #deal with single cov input
-  cov <- cov_to_matrix(tfbm$inputs$cov, tfbm$inputs$x)
-
-  #reset any previous multithreading settings
-  env <- utils::getFromNamespace(".foreachGlobals", "foreach")
-  rm(list=ls(name=env), pos=env)
-
-  #setup parallel backend to use multiple processors
-  cl = parallel::makeCluster(parallel::detectCores()[1]-1) #use all except 1 core
-  doParallel::registerDoParallel(cl)
-  '%dopar%' <- foreach::'%dopar%'
-
-  #initiate progress bar
-  if(progress == TRUE){
-    doSNOW::registerDoSNOW(cl)
-    pb <- utils::txtProgressBar(max = n_boot, style = 3)
-    fprogress <- function(n) utils::setTxtProgressBar(pb, n)
-    opts <- list(progress = fprogress)
-  }
-
-  #bootstrap loop (multithreaded)
-  Vboot = foreach::foreach(i=1:n_boot, .combine='c', .inorder=FALSE, .options.snow = opts) %dopar% {
-
-    #assign default bootstrap results
-    bootstrapped_results <- NULL
-
-    #re-sample rows from inputs
-    resampled_rows <- sample(seq_len(length(x)), length(x), replace = TRUE)
-    resampled_x <- x[resampled_rows]
-    resampled_genes <- genes[resampled_rows, ]
-    resampled_cov <- cov[resampled_rows, ]
-
-    #get tfbm means
-    temp <- toa::tfbm(resampled_x, resampled_genes, shared_tfbm_ref, resampled_cov, foldThreshDEG, TRUE)
-
-    #update bootstrap results if tfbm() was successful
-    if(!is.null(temp$df_results))  bootstrapped_results <- temp$df_results$log2_mean_fold_diff
-
-    bootstrapped_results
-  }
-
-  #stop multithreading
-  parallel::stopCluster(cl)
-
-  #close progress bar
-  if(progress == TRUE){
-    close(pb)
-  }
-
-  #create matrix of bootstrapped results (columns are boostrap resamples; rows correspond to variables)
-  boot = matrix(Vboot, nrow = nrow(non_boot_means))
-  row.names(boot) = row.names(non_boot_means)
-
-  #
-  N_valid_boot_resamples = apply(boot, 1, function(x) sum(!is.na(x) & !is.nan(x)))
-
-  #compute bootstrapped estimates and stats
-  boot_log2_mean <- non_boot_means$log2_mean_fold_diff
-  boot_log2_se <- apply(boot, 1, function(x) stats::sd(x, na.rm = TRUE))
+  #compute stats
+  N_valid_boot_resamples = apply(boot, 2, function(x) sum(!is.na(x) & !is.nan(x)))
+  boot_log2_mean <- tfbm_result$df_results$log2_mean_fold_diff
+  boot_log2_se <- apply(boot, 2, function(x) stats::sd(x, na.rm = TRUE))
   boot_log2_z = boot_log2_mean / boot_log2_se
   boot_log2_pValue = 2*stats::pnorm(q = abs(boot_log2_z), lower.tail = FALSE)
 
   #create results dataframe
-  df_results <- data.frame(non_boot_means,
-                           boot_log2_se = boot_log2_se,
-                           boot_log2_z = boot_log2_z,
-                           boot_log2_pValue = boot_log2_pValue,
-                           valid_boot_samples = N_valid_boot_resamples)
+  df_results <- data.frame(TFBM = colnames(boot),
+                           "Mean fold-difference" = round(2^boot_log2_mean,2),
+                           "SE fold-difference" = round(2^boot_log2_se,2),
+                           "p SE bootstrap" = round(boot_log2_pValue, 4),
+                           "n valid ratios" = tfbm_result$df_results$n_valid_ratios,
+                           "Mean log ratio" = boot_log2_mean,
+                           "SE_log_ratio" = boot_log2_se)
 
-  #print results
-  print(paste0("On average, ", round(mean(N_valid_boot_resamples),2), " out of ",  n_boot, " bootstrap resamples produced valid mean ratios"))
-
-  #if no failure up to this point, update the results list with computed values
+  #
   results$df_results <- df_results
   results$boot <- boot
 

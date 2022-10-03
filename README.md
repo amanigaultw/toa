@@ -26,29 +26,27 @@ This example illustrate how the toa package can be used to identify differential
 library(toa)
 
 #load example data
-data("Chang")
-data("epith_mesen_ref_raw")
+data("TAU_Trials3_Gene_CPM_Log2")
+data("TAUTrials2022BC_Intervention_Rm1BadQC_RmB14")
+data("HumanM1M2_3Reps_Martinez")
 
-#get differentially expressed genes
-DEG_result <- get_DEG(x = Chang$stress, 
-                      genes = subset(Chang, select = -stress), 
-                      foldThreshDEG = 1.25)
-table(DEG_result$DEG)
+#get DEG
+DEG_result <- get_DEG(expression_data = TAU_Trials3_Gene_CPM_Log2,
+                      exp_symbol_col = 1,
+                      regressor_matrix = TAUTrials2022BC_Intervention_Rm1BadQC_RmB14,
+                      reg_id_col = 1,
+                      foldThreshDEG = 2,
+                      screenSD = 0,
+                      verbose = TRUE)
 
-#get diagnosticity scores
-toa_ref_epith_mesen <- get_toa_ref(gene_symbols = epith_mesen_ref_raw[,1],
-                                   exp_treatment = epith_mesen_ref_raw[,2:11],
-                                   exp_control = epith_mesen_ref_raw[,12:21])
+#get toa
+toa_result <- toa(DEG_result = DEG_result,
+                  ref = HumanM1M2_3Reps_Martinez,
+                  type_1_cols = 2:4,
+                  type_2_cols = 5:7)
 
-#toa (does not produce bootstrap estimates of mean diagnosticity scores)
-toa_result <- toa(x = Chang$stress, 
-                  genes = subset(Chang, select = -stress), 
-                  toa_ref = toa_ref_epith_mesen, 
-                  foldThreshDEG = 1.25)
-toa_result$df_results
-
-#toa_boot (produces bootstrap estimates of mean diagnosticity scores)
-toa_boot_result <- toa_boot(toa = toa_result)
+#get bootstrapped stats
+toa_boot_result <- toa_boot(toa_result)
 ```
 
 Next, we follow up the toa with an analysis of transcription factor binding motifs
@@ -58,15 +56,11 @@ Next, we follow up the toa with an analysis of transcription factor binding moti
 library(Rfssa)
 load_github_data("https://github.com/amanigaultw/TELiS/blob/main/HumanTransfacTELiS2019.RData")
 
-#tfbm (does not produce bootstrap estimates of tfbm ratios)
-tfbm_result <- tfbm(x <- Chang[,1],
-                    genes <- Chang[,-1],
-                    tfbm_ref = HumanTransfacTELiS2019,
-                    foldThreshDEG = 1.25)
+#tfbm
+tfbm_result <- tfbm(toa_boot_result, HumanTransfacTELiS2019)
 
-#tfbm_boot (produces bootstrap estimates of tfbm ratios)
-tfbm_boot_results <- tfbm_boot(tfbm_result)
-
-head(tfbm_boot_results$df_results)
+#tfbm boot
+tfbm_boot_result <- tfbm_boot(tfbm_result)
+head(tfbm_boot_result$df_results)
 ```
 

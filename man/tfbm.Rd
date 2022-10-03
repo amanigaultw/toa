@@ -2,26 +2,15 @@
 % Please edit documentation in R/tfbm.R
 \name{tfbm}
 \alias{tfbm}
-\title{Transcript Origin Analysis for Transcription Factor Binding Motifs}
+\title{Examine relative frequency of Transcription Factor Binding Motifs}
 \usage{
-tfbm(x, genes, tfbm_ref, cov = NULL, foldThreshDEG = 1.5, lite = FALSE)
+tfbm(toa_boot_result, tfbm_ref)
 }
 \arguments{
-\item{x}{a numeric vector of values; the predictor variable of interest.}
-
-\item{genes}{a numeric matrix of gene expression values, where columns are individual genes.}
+\item{toa_boot_result}{a toa_boot result object produced using \code{toa_boot()}.}
 
 \item{tfbm_ref}{a list object containing several tfbm reference data frames;
 the first column of each data frame must contain gene symbols and be named "gene"}
-
-\item{cov}{a numeric vector/matrix of values, where columns are individual covariate measures;
-if NULL, unadjusted regression coefficients (dif) are produced.}
-
-\item{foldThreshDEG}{the X-fold expression threshold to be exceeded for a given gene to be
-considered differentially expressed.}
-
-\item{lite}{a bool indicating whether a stripped down version of the function
-should be run; FALSE by default.}
 }
 \value{
 tfbm returns an object of class "tfbm"
@@ -29,29 +18,46 @@ tfbm returns an object of class "tfbm"
 An object of class "tfbm" is a list containing:
 \enumerate{
 \item a results data frame.
-\item a raw coefficients data frame.
 \item a raw ratios data frame.
 \item a list of input arguments.
 }
 }
 \description{
-performs transcript origin analysis for Transcription Factor Binding Motif
-without bootstrapped estimates of tfbm ratios.
+performs a variant of transcript origin analysis aimed at determining whether the
+frequency of Transcription Factor Binding Motif is significantly increased/decreased
+among differentially expressed genes.
 }
 \examples{
 \dontrun{
-#load example data
-data("Chang")
+#' #load example data
+data("TAU_Trials3_Gene_CPM_Log2")
+data("TAUTrials2022BC_Intervention_Rm1BadQC_RmB14")
+data("HumanM1M2_3Reps_Martinez")
+
+#get DEG
+DEG_result <- get_DEG(expression_data = TAU_Trials3_Gene_CPM_Log2,
+exp_symbol_col = 1,
+regressor_matrix = TAUTrials2022BC_Intervention_Rm1BadQC_RmB14,
+reg_id_col = 1,
+foldThreshDEG = 2,
+screenSD = 0,
+verbose = TRUE)
+
+#get toa
+toa_result <- toa(DEG_result = DEG_result,
+ref = HumanM1M2_3Reps_Martinez,
+type_1_cols = 2:4,
+type_2_cols = 5:7)
+
+#get bootstrapped stats
+toa_boot_result <- toa_boot(toa_result)
 
 #load a tfbm database from another repo (because it is >27MB)
 library(Rfssa)
 load_github_data("https://github.com/amanigaultw/TELiS/blob/main/HumanTransfacTELiS2019.RData")
 
 #tfbm
-tfbm_result <- tfbm(x <- Chang[,1],
-                    genes <- Chang[,-1],
-                    tfbm_ref = HumanTransfacTELiS2019,
-                    cov = NULL,
-                    foldThreshDEG = 1.25)
+tfbm_result <- tfbm(toa_boot_result, HumanTransfacTELiS2019)
+View(tfbm_result$df_results)
 }
 }

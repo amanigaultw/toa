@@ -4,20 +4,21 @@
 \alias{toa_boot}
 \title{bootstrapped Transcript Origin Analysis}
 \usage{
-toa_boot(toa, n_boot = 200, progress = TRUE)
+toa_boot(toa_result, n_boot = 200, verbose = TRUE)
 }
 \arguments{
-\item{toa}{a toa result object produced using \code{toa()}.}
+\item{toa_result}{a toa result object produced using \code{toa()}.}
 
 \item{n_boot}{the number of bootstrap sample to run.}
 
-\item{progress}{a bool indicating whether a progress bar should be shown.}
+\item{verbose}{a bool indicating whether a progress bar should be shown.}
 }
 \value{
 a list object containing:
 \enumerate{
 \item a results data frame.
 \item a matrix containing bootstrapped mean diagnosticity score estimates \code{boot}.
+\item a list of bootstrapped statistics.
 \item a list of input arguments.
 }
 }
@@ -28,19 +29,27 @@ diagnosticity scores; will use n-1 available CPU cores by default.
 \examples{
 \dontrun{
 #load example data
-data("Chang")
-data("epith_mesen_ref_raw")
-#get diagnosticity scores
-toa_ref_epith_mesen <- get_toa_ref(gene_symbols = epith_mesen_ref_raw[,1],
-                                   exp_treatment = epith_mesen_ref_raw[,2:11],
-                                   exp_control = epith_mesen_ref_raw[,12:21])
-#toa
-toa_result <- toa(x = Chang$stress,
-                  genes = subset(Chang, select = -stress),
-                  toa_ref = toa_ref_epith_mesen,
-                  foldThreshDEG = 1.25)
-#toa_boot
-toa_boot_result <- toa_boot(toa = toa_result,
-                            n_boot = 400)
+data("TAU_Trials3_Gene_CPM_Log2")
+data("TAUTrials2022BC_Intervention_Rm1BadQC_RmB14")
+data("HumanM1M2_3Reps_Martinez")
+
+#get DEG
+DEG_result <- get_DEG(expression_data = TAU_Trials3_Gene_CPM_Log2,
+exp_symbol_col = 1,
+regressor_matrix = TAUTrials2022BC_Intervention_Rm1BadQC_RmB14,
+reg_id_col = 1,
+foldThreshDEG = 2,
+screenSD = 0,
+verbose = TRUE)
+
+#get toa
+toa_result <- toa(DEG_result = DEG_result,
+ref = HumanM1M2_3Reps_Martinez,
+type_1_cols = 2:4,
+type_2_cols = 5:7)
+
+#get bootstrapped stats
+toa_boot_result <- toa_boot(toa_result)
+toa_boot_result$df_results
 }
 }

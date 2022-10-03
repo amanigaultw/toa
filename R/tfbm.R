@@ -1,78 +1,64 @@
-#' Transcript Origin Analysis for Transcription Factor Binding Motifs
+#' Examine relative frequency of Transcription Factor Binding Motifs
 #'
-#' performs transcript origin analysis for Transcription Factor Binding Motif
-#' without bootstrapped estimates of tfbm ratios.
+#' performs a variant of transcript origin analysis aimed at determining whether the
+#' frequency of Transcription Factor Binding Motif is significantly increased/decreased
+#' among differentially expressed genes.
 #'
-#' @inheritParams get_DEG
+#' @param toa_boot_result a toa_boot result object produced using \code{toa_boot()}.
 #' @param tfbm_ref a list object containing several tfbm reference data frames;
 #' the first column of each data frame must contain gene symbols and be named "gene"
-#' @param lite a bool indicating whether a stripped down version of the function
-#' should be run; FALSE by default.
 #' @return tfbm returns an object of class "tfbm"
 #'
 #' An object of class "tfbm" is a list containing:
 #' \enumerate{
 #'   \item a results data frame.
-#'   \item a raw coefficients data frame.
 #'   \item a raw ratios data frame.
 #'   \item a list of input arguments.
 #' }
 #' @examples
 #' \dontrun{
-#' #load example data
-#' data("Chang")
+#' #' #load example data
+#' data("TAU_Trials3_Gene_CPM_Log2")
+#' data("TAUTrials2022BC_Intervention_Rm1BadQC_RmB14")
+#' data("HumanM1M2_3Reps_Martinez")
+#'
+#' #get DEG
+#' DEG_result <- get_DEG(expression_data = TAU_Trials3_Gene_CPM_Log2,
+#' exp_symbol_col = 1,
+#' regressor_matrix = TAUTrials2022BC_Intervention_Rm1BadQC_RmB14,
+#' reg_id_col = 1,
+#' foldThreshDEG = 2,
+#' screenSD = 0,
+#' verbose = TRUE)
+#'
+#' #get toa
+#' toa_result <- toa(DEG_result = DEG_result,
+#' ref = HumanM1M2_3Reps_Martinez,
+#' type_1_cols = 2:4,
+#' type_2_cols = 5:7)
+#'
+#' #get bootstrapped stats
+#' toa_boot_result <- toa_boot(toa_result)
 #'
 #' #load a tfbm database from another repo (because it is >27MB)
 #' library(Rfssa)
 #' load_github_data("https://github.com/amanigaultw/TELiS/blob/main/HumanTransfacTELiS2019.RData")
 #'
 #' #tfbm
-#' tfbm_result <- tfbm(x <- Chang[,1],
-#'                     genes <- Chang[,-1],
-#'                     tfbm_ref = HumanTransfacTELiS2019,
-#'                     cov = NULL,
-#'                     foldThreshDEG = 1.25)
+#' tfbm_result <- tfbm(toa_boot_result, HumanTransfacTELiS2019)
+#' View(tfbm_result$df_results)
 #' }
 #' @export
-tfbm <- function(x, genes, tfbm_ref, cov = NULL, foldThreshDEG = 1.5, lite = FALSE){
-
-  #log inputs
-  if(lite == FALSE) inputs = as.list(environment())
+tfbm <- function(toa_boot_result, tfbm_ref){
 
   #instantiate tfbm result object
   results <- list(df_results = NULL,
-                  df_DEG = NULL,
                   df_ratios = NULL,
-                  inputs = NULL)
-  if(lite == FALSE) results$inputs = inputs
+                  inputs = as.list(environment()))
   class(results) <- "tfbm"
 
-  #check inputs
-  if(!valid_input_x(x) | !valid_input_genes(genes) | !valid_input_cov(cov) | !valid_input_tfbm_ref(tfbm_ref)){
-    warning("invalid inputs; check warnings")
-    return(results)
-  }
-
-  #clean gene symbols
-  for(i in 1:length(tfbm_ref)){
-    tfbm_ref[[i]]$gene <- set_symbols(tfbm_ref[[i]]$gene)
-  }
-
-  #get differentially expressed genes
-  df_DEG = get_DEG(x, genes, cov, foldThreshDEG)
-
-  if(is.null(df_DEG)){
-    warning("get_DEG failed")
-    return(results)
-  }
-
   #get tfbm ratios (as up-reg over down-reg)
-  df_ratios <- get_ratios(df_DEG, tfbm_ref)
-
-  if(is.null(df_ratios)){
-    warning("get_ratios failed")
-    return(results)
-  }
+  df_ratios <- get_ratios(toa_boot_result$inputs$toa$inputs$DEG$df_DEG, tfbm_ref)
 
   nValid <- apply(df_ratios, 2, function(x) sum(!is.na(x)))
   log2mean <- apply(df_ratios, 2, function(x) mean(log2(x), na.rm = TRUE))
@@ -85,10 +71,7 @@ tfbm <- function(x, genes, tfbm_ref, cov = NULL, foldThreshDEG = 1.5, lite = FAL
 
   #if no failure up to this point, update the results list with computed values
   results$df_results <- df_results
-  if(lite == FALSE){
-    results$df_DEG <- df_DEG
-    results$df_ratios <- df_ratios
-  }
+  results$df_ratios <- df_ratios
 
   return(results)
 }
