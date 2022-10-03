@@ -34,6 +34,8 @@ data("HumanM1M2_3Reps_Martinez")
 DEG_result <- get_DEG(expression_data = TAU_Trials3_Gene_CPM_Log2,
                       regressor_matrix = TAUTrials2022BC_Intervention_Rm1BadQC_RmB14,
                       foldThreshDEG = 2)
+                      
+table(DEG_result$df_DEG$DEG)
 
 #get toa
 toa_result <- toa(DEG_result = DEG_result,
@@ -43,6 +45,11 @@ toa_result <- toa(DEG_result = DEG_result,
 
 #get bootstrapped stats
 toa_boot_result <- toa_boot(toa_result)
+
+#format bootstrapped toa results and view
+pretty_results <- toa_result_format(toa_boot_result)
+View(pretty_results)
+
 ```
 
 Next, we follow up the toa with an analysis of transcription factor binding motifs
