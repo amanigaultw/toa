@@ -20,7 +20,7 @@ devtools::install_github("amanigaultw/toa")
 
 ## Example
 
-This example illustrate how the toa package can be used to identify differentially expressed genes, generate a reference dataset for Transcript Origin Analysis (TOA), and run a (non)bootstrapped TOA.
+This example illustrate how the toa package can be used to identify differentially expressed genes, and run Transcript Origin Analysis (TOA).
 
 ``` r
 library(toa)
