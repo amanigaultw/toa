@@ -45,3 +45,27 @@
 #' @author Andrew Manigault \email{andrew_manigault@@brown.edu}
 #' @keywords internal
 "TAUTrials2022BC_Intervention_Rm1BadQC_RmB14"
+
+#' CGCD14_RNADataLog2 dataset
+#'
+#' @name CGCD14_RNADataLog2
+#' @docType data
+#' @author Andrew Manigault \email{andrew_manigault@@brown.edu}
+#' @keywords internal
+"CGCD14_RNADataLog2"
+
+#' CGCD14_Group dataset
+#'
+#' @name CGCD14_Group
+#' @docType data
+#' @author Andrew Manigault \email{andrew_manigault@@brown.edu}
+#' @keywords internal
+"CGCD14_Group"
+
+#' HumanCD14CD16NegVsPos_8Reps_Wong dataset
+#'
+#' @name HumanCD14CD16NegVsPos_8Reps_Wong
+#' @docType data
+#' @author Andrew Manigault \email{andrew_manigault@@brown.edu}
+#' @keywords internal
+"HumanCD14CD16NegVsPos_8Reps_Wong"
