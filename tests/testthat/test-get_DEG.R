@@ -1,4 +1,4 @@
-test_that("get_DEG works", {
+test_that("get_DEG produces the same output as Steve's Java program on TAU trial data", {
 
   #load example data
   data("TAU_Trials3_Gene_CPM_Log2")
