@@ -181,12 +181,12 @@ get_boot_means_matrix <- function(diagnosticity_scores, boot_DEG){
     df_final <- merge(diagnosticity_scores, boot_DEG[[i]], by = 1, all.x = TRUE)
 
     #
-    boot_means_matrix[i, 1] <- mean(df_final[df_final$DEG == 1, ]$diag_score_linear)
-    boot_means_matrix[i, 2] <- mean(df_final[df_final$DEG == -1, ]$diag_score_linear)
-    boot_means_matrix[i, 3] <- mean(df_final[df_final$DEG != 0, ]$diag_score_linear)
-    boot_means_matrix[i, 4] <- mean(df_final[df_final$DEG == 1, ]$diag_score_log)
-    boot_means_matrix[i, 5] <- mean(df_final[df_final$DEG == -1, ]$diag_score_log)
-    boot_means_matrix[i, 6] <- mean(df_final[df_final$DEG != 0, ]$diag_score_log)
+    boot_means_matrix[i, 1] <- mean(df_final[df_final$DEG == 1, ]$diag_score_linear, na.rm = TRUE)
+    boot_means_matrix[i, 2] <- mean(df_final[df_final$DEG == -1, ]$diag_score_linear, na.rm = TRUE)
+    boot_means_matrix[i, 3] <- mean(df_final[df_final$DEG != 0, ]$diag_score_linear, na.rm = TRUE)
+    boot_means_matrix[i, 4] <- mean(df_final[df_final$DEG == 1, ]$diag_score_log, na.rm = TRUE)
+    boot_means_matrix[i, 5] <- mean(df_final[df_final$DEG == -1, ]$diag_score_log, na.rm = TRUE)
+    boot_means_matrix[i, 6] <- mean(df_final[df_final$DEG != 0, ]$diag_score_log, na.rm = TRUE)
   }
 
   return(boot_means_matrix)
@@ -205,19 +205,19 @@ get_boot_stats <- function(boot_means_matrix, toa_means){
 
   list2env(toa_means, envir=environment())
 
-  boot_mean <- list(boot_mean_toa_upreg_linear = mean(boot_means_matrix[,1]),
-                    boot_mean_toa_downreg_linear = mean(boot_means_matrix[,2]),
-                    boot_mean_toa_reg_linear = mean(boot_means_matrix[,3]),
-                    boot_mean_toa_upreg_log = mean(boot_means_matrix[,4]),
-                    boot_mean_toa_downreg_log = mean(boot_means_matrix[,5]),
-                    boot_mean_toa_reg_log = mean(boot_means_matrix[,6]))
+  boot_mean <- list(boot_mean_toa_upreg_linear = mean(boot_means_matrix[,1], na.rm = TRUE),
+                    boot_mean_toa_downreg_linear = mean(boot_means_matrix[,2], na.rm = TRUE),
+                    boot_mean_toa_reg_linear = mean(boot_means_matrix[,3], na.rm = TRUE),
+                    boot_mean_toa_upreg_log = mean(boot_means_matrix[,4], na.rm = TRUE),
+                    boot_mean_toa_downreg_log = mean(boot_means_matrix[,5], na.rm = TRUE),
+                    boot_mean_toa_reg_log = mean(boot_means_matrix[,6], na.rm = TRUE))
 
-  boot_se <- list(boot_se_toa_upreg_linear = stats::sd(boot_means_matrix[,1]),
-                  boot_se_toa_downreg_linear = stats::sd(boot_means_matrix[,2]),
-                  boot_se_toa_reg_linear = stats::sd(boot_means_matrix[,3]),
-                  boot_se_toa_upreg_log = stats::sd(boot_means_matrix[,4]),
-                  boot_se_toa_downreg_log = stats::sd(boot_means_matrix[,5]),
-                  boot_se_toa_reg_log = stats::sd(boot_means_matrix[,6]))
+  boot_se <- list(boot_se_toa_upreg_linear = stats::sd(boot_means_matrix[,1], na.rm = TRUE),
+                  boot_se_toa_downreg_linear = stats::sd(boot_means_matrix[,2], na.rm = TRUE),
+                  boot_se_toa_reg_linear = stats::sd(boot_means_matrix[,3], na.rm = TRUE),
+                  boot_se_toa_upreg_log = stats::sd(boot_means_matrix[,4], na.rm = TRUE),
+                  boot_se_toa_downreg_log = stats::sd(boot_means_matrix[,5], na.rm = TRUE),
+                  boot_se_toa_reg_log = stats::sd(boot_means_matrix[,6], na.rm = TRUE))
 
   list2env(boot_se, envir=environment())
 
