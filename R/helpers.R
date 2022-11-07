@@ -270,12 +270,10 @@ get_ratios <- function(df_DEG, tfbm_ref){
 
 get_boot_mat <- function(boot_DEG){
 
-  temp <- list()
+  temp <- list(boot_DEG[[i]][,c("gene")])
   for(i in 1:length(boot_DEG)){
-    if(i == 1){
-      temp[[i]] <- boot_DEG[[i]][,c("gene", "DEG")]
-    }else{
-      temp[[i]] <- boot_DEG[[i]]$DEG
+    if(sd(boot_DEG[[i]]$dif, na.rm = TRUE) > 0){
+      temp[[i + 1]] <- boot_DEG[[i]]$DEG
     }
   }
   boot_mat <- do.call(cbind, temp)
