@@ -272,7 +272,7 @@ get_boot_mat <- function(boot_DEG){
 
   temp <- list(boot_DEG[[1]][,c("gene")])
   for(i in 1:length(boot_DEG)){
-    if(sd(boot_DEG[[i]]$dif, na.rm = TRUE) > 0){
+    if(stats::sd(boot_DEG[[i]]$dif, na.rm = TRUE) > 0){
       temp[[i + 1]] <- boot_DEG[[i]]$DEG
     }
   }

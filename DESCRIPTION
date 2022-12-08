@@ -1,6 +1,6 @@
 Package: toa
 Title: Transcript Origin Analysis
-Version: 0.0.0.9000
+Version: 0.0.0.9100
 Author: Andrew Manigault <andrew_manigault@brown.edu>
 Maintainer: Andrew Manigault <andrew_manigault@brown.edu> 
 Description: Offers tools to perform analysis of microarray data, 

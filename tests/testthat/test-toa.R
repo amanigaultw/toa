@@ -5,7 +5,7 @@ test_that("toa produces the same output as Steve's Java program on TAU trial dat
   data("TAUTrials2022BC_Intervention_Rm1BadQC_RmB14")
   data("HumanM1M2_3Reps_Martinez")
 
-  popGenes <- read.table(test_path("fixtures", "BootstrapMicroarrayAnalysis - TAU2022BC - Intervention RmB14 - EMT Transfac 2.00 - popGenes.txt"))
+  popGenes <- read.table(test_path("fixtures", "TAU2022BCRmB14EMTTransfac2popGenes.txt"))
   popGenes <- as.character(popGenes)
   popGenes[which(popGenes == "TRUE")] <- "T" #deal with annoying re-coding of gene name by Steve's program.
 

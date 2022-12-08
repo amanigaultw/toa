@@ -69,3 +69,27 @@
 #' @author Andrew Manigault \email{andrew_manigault@@brown.edu}
 #' @keywords internal
 "HumanCD14CD16NegVsPos_8Reps_Wong"
+
+#' CTRAProInflam dataset
+#'
+#' @name CTRAProInflam
+#' @docType data
+#' @author Andrew Manigault \email{andrew_manigault@@brown.edu}
+#' @keywords internal
+"CTRAProInflam"
+
+#' CTRAAntiviralAntibody dataset
+#'
+#' @name CTRAAntiviralAntibody
+#' @docType data
+#' @author Andrew Manigault \email{andrew_manigault@@brown.edu}
+#' @keywords internal
+"CTRAAntiviralAntibody"
+
+#' CTRAProinflamAntiviralAntibody dataset
+#'
+#' @name CTRAProinflamAntiviralAntibody
+#' @docType data
+#' @author Andrew Manigault \email{andrew_manigault@@brown.edu}
+#' @keywords internal
+"CTRAProinflamAntiviralAntibody"
