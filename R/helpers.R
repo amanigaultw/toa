@@ -268,7 +268,7 @@ get_ratios <- function(df_DEG, tfbm_ref){
   ratios <- list()
   for(i in 1:length(tfbm_ref)){
     temp <- merge(df_DEG[df_DEG$DEG != 0, ], tfbm_ref[[i]], by = "gene")
-    temp <- stats::aggregate(temp[,-(1:3)], list(temp$DEG), function(x) mean(x, na.rm = TRUE))
+    temp <- stats::aggregate(temp[,-(1:ncol(df_DEG))], list(temp$DEG), function(x) mean(x, na.rm = TRUE))
     temp[temp[,] == 0] <- NA
     ratios[[i]] <- temp[temp[,1] == 1, -1] / temp[temp[,1] == -1, -1]
     names(ratios)[i] <- names(tfbm_ref)[i]
