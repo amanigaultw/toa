@@ -136,12 +136,12 @@ get_toa_means <- function(diagnosticity_scores, df_DEG){
   df_final <- merge(diagnosticity_scores, df_DEG, by = 1, all.x = TRUE)
 
   #
-  means <- list(mean_toa_upreg_linear = mean(df_final[df_final$DEG == 1, ]$diag_score_linear),
-                mean_toa_downreg_linear = mean(df_final[df_final$DEG == -1, ]$diag_score_linear),
-                mean_toa_reg_linear = mean(df_final[df_final$DEG != 0, ]$diag_score_linear),
-                mean_toa_upreg_log = mean(df_final[df_final$DEG == 1, ]$diag_score_log),
-                mean_toa_downreg_log = mean(df_final[df_final$DEG == -1, ]$diag_score_log),
-                mean_toa_reg_log = mean(df_final[df_final$DEG != 0, ]$diag_score_log))
+  means <- list(mean_toa_upreg_linear = mean(df_final[df_final$DEG == 1, ]$diag_score_linear, na.rm = TRUE),
+                mean_toa_downreg_linear = mean(df_final[df_final$DEG == -1, ]$diag_score_linear, na.rm = TRUE),
+                mean_toa_reg_linear = mean(df_final[df_final$DEG != 0, ]$diag_score_linear, na.rm = TRUE),
+                mean_toa_upreg_log = mean(df_final[df_final$DEG == 1, ]$diag_score_log, na.rm = TRUE),
+                mean_toa_downreg_log = mean(df_final[df_final$DEG == -1, ]$diag_score_log, na.rm = TRUE),
+                mean_toa_reg_log = mean(df_final[df_final$DEG != 0, ]$diag_score_log, na.rm = TRUE))
 
   return(means)
 }
