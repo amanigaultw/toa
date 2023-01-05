@@ -69,13 +69,13 @@ get_df_DEG <- function(x, genes, cov = NULL, foldThreshDEG = 1.5){
   }
 
   tStatistic = dif / SE
-  pValue = 2 * pt(q = abs(tStat), df = length(X_vars) - ncol(XX), lower.tail = F)
+  pValue = 2 * stats::pt(q = abs(tStatistic), df = nrow(XX) - ncol(XX), lower.tail = F)
 
   #generate a dataframe containing gene symbols, regression coefficients and DEG
   df_DEG = data.frame(gene = colnames(genes),
                       dif = dif,
                       SE = SE,
-                      tStatistic = tStatistics,
+                      tStatistic = tStatistic,
                       pValue = pValue,
                       DEG = sign(dif)*(abs(dif) > log2(foldThreshDEG)))
 
