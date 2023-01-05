@@ -60,15 +60,26 @@ get_df_DEG <- function(x, genes, cov = NULL, foldThreshDEG = 1.5){
 
   #run fastLmPure regressions for each gene and save only the regression coefficient of the predictor variable
   dif = numeric(ncol(genes))
+  SE = numeric(ncol(genes))
   XX <- as.matrix(cbind(intercept = 1, X_vars))
   for (i in seq_len(ncol(genes))){
-    dif[i] = RcppArmadillo::fastLmPure(XX, genes[,i])$coefficients[2]
+    temp = RcppArmadillo::fastLmPure(XX, genes[,i])
+    dif[i] = temp$coefficients[2]
+    SE[i] = temp$stderr[2]
   }
+
+  tStatistic = dif / SE
+  pValue = 2 * pt(q = abs(tStat), df = length(X_vars) - ncol(XX), lower.tail = F)
 
   #generate a dataframe containing gene symbols, regression coefficients and DEG
   df_DEG = data.frame(gene = colnames(genes),
                       dif = dif,
+                      SE = SE,
+                      tStatistic = tStatistics,
+                      pValue = pValue,
                       DEG = sign(dif)*(abs(dif) > log2(foldThreshDEG)))
+
+  df_DEG[sapply(df_DEG, is.nan)] <- NA
 
   return(df_DEG)
 }
