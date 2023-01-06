@@ -71,6 +71,7 @@ analyze <- function(expression_data,
                         regressor_matrix = regressor_matrix,
                         reg_id_col = reg_id_col,
                         foldThreshDEG = foldThreshDEG,
+                        DEGfun = DEGfun,
                         screenSD = screenSD,
                         verbose = verbose)
 
