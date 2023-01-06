@@ -52,7 +52,8 @@
 #'   initialDEG <- sign(df_DEG$dif)*(abs(df_DEG$dif) > log2(foldThreshDEG))
 #'   #recode missing p values as 1
 #'   df_DEG$pValue[is.na(df_DEG$pValue)] <- 1
-#'   #recode DEG values beyond threshold as 0 if the corresponding pvalue is non-signifcant (alpha = .05)
+#'   #recode DEG values beyond threshold as 0 if the corresponding pvalue is
+#'   #non-signifcant (alpha = .05)
 #'   DEG <- ifelse(df_DEG$pValue > .05, 0, initialDEG)
 #'   #return the DEG vector
 #'   return(DEG)
@@ -66,7 +67,8 @@
 #'   df_DEG$pValue[is.na(df_DEG$pValue)] <- 1
 #'   #apply FDR adjustment to pValues
 #'   FDRpValue <- stats::p.adjust(df_DEG$pValue, method = "fdr")
-#'   #recode DEG values beyond threshold as 0 if the corresponding FDR adjusted pvalue is non-signifcant (alpha = .05)
+#'   #recode DEG values beyond threshold as 0 if the corresponding FDR adjusted
+#'   #pvalue is non-signifcant (alpha = .05)
 #'   DEG <- ifelse(FDRpValue > .05, 0, initialDEG)
 #'   #return the DEG vector
 #'   return(DEG)

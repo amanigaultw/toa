@@ -92,7 +92,7 @@ data("HumanM1M2_3Reps_Martinez")
 load_github_data("https://github.com/amanigaultw/TELiS/blob/main/HumanTransfacTELiS2019.RData")
 
 #analyze
-analyze_result <- analyze(expression_data = TAU_Trials3_Gene_CPM_Log2
+analyze_result <- analyze(expression_data = TAU_Trials3_Gene_CPM_Log2,
                           regressor_matrix = TAUTrials2022BC_Intervention_Rm1BadQC_RmB14,
                           ref = HumanM1M2_3Reps_Martinez,
                           type_1_cols = 2:4,
