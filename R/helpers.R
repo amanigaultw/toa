@@ -48,7 +48,7 @@ get_x_cov <- function(analysis_data, regressor_matrix){
 }
 
 
-get_df_DEG <- function(x, genes, cov = NULL, foldThreshDEG = 1.5){
+get_df_DEG <- function(x, genes, cov = NULL, foldThreshDEG = 1.5, DEGfun = NULL){
 
   df_DEG <- NULL
 
@@ -76,12 +76,28 @@ get_df_DEG <- function(x, genes, cov = NULL, foldThreshDEG = 1.5){
                       dif = dif,
                       SE = SE,
                       tStatistic = tStatistic,
-                      pValue = pValue,
-                      DEG = sign(dif)*(abs(dif) > log2(foldThreshDEG)))
+                      pValue = pValue)
 
   df_DEG[sapply(df_DEG, is.nan)] <- NA
 
+  #
+  if(is.null(DEGfun)){
+    DEGfun <- function(df_DEG, foldThreshDEG) sign(df_DEG$dif)*(abs(df_DEG$dif) > log2(foldThreshDEG))
+  }
+
+  DEG <- DEGfun(df_DEG, foldThreshDEG)
+
+  stopifnot("invalid DEG column produced" = validDEG(DEG, df_DEG))
+
+  df_DEG$DEG <- DEG
+
   return(df_DEG)
+}
+
+validDEG <- function(DEG, df_DEG){
+  if(length(DEG) != nrow(df_DEG)) return(FALSE)
+  if(!all(unique(DEG) %in% c(-1, 0, 1))) return(FALSE)
+  return(TRUE)
 }
 
 
@@ -147,7 +163,7 @@ get_toa_means <- function(diagnosticity_scores, df_DEG){
 }
 
 
-get_boot_DEG <- function(analysis_data, regressor_matrix, foldThreshDEG, n_boot, verbose){
+get_boot_DEG <- function(analysis_data, regressor_matrix, foldThreshDEG, DEGfun, n_boot, verbose){
 
   #bootstrap DEG
   #reset any previous multithreading settings
@@ -170,7 +186,8 @@ get_boot_DEG <- function(analysis_data, regressor_matrix, foldThreshDEG, n_boot,
     DEG <- get_df_DEG(x = get_x_cov(analysis_data, regressor_matrix)$x[sampled_rows],
                       cov = as.data.frame(get_x_cov(analysis_data, regressor_matrix)$cov)[sampled_rows,],
                       genes = analysis_data[sampled_rows,-c(1:ncol(regressor_matrix))],
-                      foldThreshDEG = foldThreshDEG)
+                      foldThreshDEG = foldThreshDEG,
+                      DEGfun = DEGfun)
   }
 
   #stop multithreading

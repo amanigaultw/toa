@@ -10,6 +10,7 @@ get_DEG(
   regressor_matrix,
   reg_id_col = 1,
   foldThreshDEG = 1.5,
+  DEGfun = NULL,
   screenSD = 0,
   verbose = TRUE
 )
@@ -31,6 +32,9 @@ for an example of appropriate formatting.}
 
 \item{foldThreshDEG}{the X-fold expression threshold to be exceeded for a given gene to be
 considered differentially expressed.}
+
+\item{DEGfun}{optionally input a custom function to derived differentially expressed genes. This function pulls variables
+from the local environment (including df_DEG, foldThreshDEG) and MUST return a DEG vector; see examples for more.}
 
 \item{screenSD}{minimum gene expression SD; genes that show expression variability below
 threshold are excluded.}
@@ -66,5 +70,43 @@ DEG_result <- get_DEG(expression_data = TAU_Trials3_Gene_CPM_Log2,
 
 #view results
 table(DEG_result$df_DEG$DEG)
+
+#some alternative DEGfun to consider
+
+#alternative 1
+DEGfun1 <- function(df_DEG, foldThreshDEG) {
+  #compute DEG as usual
+  initialDEG <- sign(df_DEG$dif)*(abs(df_DEG$dif) > log2(foldThreshDEG))
+  #recode missing p values as 1
+  df_DEG$pValue[is.na(df_DEG$pValue)] <- 1
+  #recode DEG values beyond threshold as 0 if the corresponding pvalue is non-signifcant (alpha = .05)
+  DEG <- ifelse(df_DEG$pValue > .05, 0, initialDEG)
+  #return the DEG vector
+  return(DEG)
+}
+
+#alternative 2
+DEGfun2 <- function(df_DEG, foldThreshDEG) {
+  #compute DEG as usual
+  initialDEG <- sign(df_DEG$dif)*(abs(df_DEG$dif) > log2(foldThreshDEG))
+  #recode missing p values as 1
+  df_DEG$pValue[is.na(df_DEG$pValue)] <- 1
+  #apply FDR adjustment to pValues
+  FDRpValue <- stats::p.adjust(df_DEG$pValue, method = "fdr")
+  #recode DEG values beyond threshold as 0 if the corresponding FDR adjusted pvalue is non-signifcant (alpha = .05)
+  DEG <- ifelse(FDRpValue > .05, 0, initialDEG)
+  #return the DEG vector
+  return(DEG)
+}
+
+#get DEG
+DEG_result <- get_DEG(expression_data = TAU_Trials3_Gene_CPM_Log2,
+                      regressor_matrix = TAUTrials2022BC_Intervention_Rm1BadQC_RmB14,
+                      foldThreshDEG = 2,
+                      DEGfun = DEGfun1)
+
+#view results
+table(DEG_result$df_DEG$DEG)
+
 }
 }

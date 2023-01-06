@@ -33,7 +33,7 @@
 #' @export
 toa_result_format <- function(toa_boot_result){
 
-steve_labels_1 <- c(names(toa_boot_result$inputs$toa$inputs$DEG$inputs$regressor_matrix)[2],
+steve_labels_1 <- c("predictor of interest",
                     "",
                     "Linear diagnosticity scores",
                     "Cell type",

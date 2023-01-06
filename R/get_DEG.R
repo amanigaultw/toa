@@ -16,6 +16,8 @@
 #' @param reg_id_col an integer indicating the position of of the subject ID column in the \code{regressor_matrix}
 #' @param foldThreshDEG the X-fold expression threshold to be exceeded for a given gene to be
 #' considered differentially expressed.
+#' @param DEGfun optionally input a custom function to derived differentially expressed genes. This function pulls variables
+#' from the local environment (including df_DEG, foldThreshDEG) and MUST return a DEG vector; see examples for more.
 #' @param screenSD minimum gene expression SD; genes that show expression variability below
 #' threshold are excluded.
 #' @param verbose a bool indicating whether to print function outputs/info to the console.
@@ -41,6 +43,44 @@
 #'
 #' #view results
 #' table(DEG_result$df_DEG$DEG)
+#'
+#' #some alternative DEGfun to consider
+#'
+#' #alternative 1
+#' DEGfun1 <- function(df_DEG, foldThreshDEG) {
+#'   #compute DEG as usual
+#'   initialDEG <- sign(df_DEG$dif)*(abs(df_DEG$dif) > log2(foldThreshDEG))
+#'   #recode missing p values as 1
+#'   df_DEG$pValue[is.na(df_DEG$pValue)] <- 1
+#'   #recode DEG values beyond threshold as 0 if the corresponding pvalue is non-signifcant (alpha = .05)
+#'   DEG <- ifelse(df_DEG$pValue > .05, 0, initialDEG)
+#'   #return the DEG vector
+#'   return(DEG)
+#' }
+#'
+#' #alternative 2
+#' DEGfun2 <- function(df_DEG, foldThreshDEG) {
+#'   #compute DEG as usual
+#'   initialDEG <- sign(df_DEG$dif)*(abs(df_DEG$dif) > log2(foldThreshDEG))
+#'   #recode missing p values as 1
+#'   df_DEG$pValue[is.na(df_DEG$pValue)] <- 1
+#'   #apply FDR adjustment to pValues
+#'   FDRpValue <- stats::p.adjust(df_DEG$pValue, method = "fdr")
+#'   #recode DEG values beyond threshold as 0 if the corresponding FDR adjusted pvalue is non-signifcant (alpha = .05)
+#'   DEG <- ifelse(FDRpValue > .05, 0, initialDEG)
+#'   #return the DEG vector
+#'   return(DEG)
+#' }
+#'
+#' #get DEG
+#' DEG_result <- get_DEG(expression_data = TAU_Trials3_Gene_CPM_Log2,
+#'                       regressor_matrix = TAUTrials2022BC_Intervention_Rm1BadQC_RmB14,
+#'                       foldThreshDEG = 2,
+#'                       DEGfun = DEGfun1)
+#'
+#' #view results
+#' table(DEG_result$df_DEG$DEG)
+#'
 #' }
 #' @export
 get_DEG <- function(expression_data,
@@ -48,6 +88,7 @@ get_DEG <- function(expression_data,
                     regressor_matrix,
                     reg_id_col = 1,
                     foldThreshDEG = 1.5,
+                    DEGfun = NULL,
                     screenSD = 0,
                     verbose = TRUE){
 
@@ -68,13 +109,17 @@ get_DEG <- function(expression_data,
   df_DEG <- get_df_DEG(x = get_x_cov(analysis_data, regressor_matrix)$x,
                        cov = get_x_cov(analysis_data, regressor_matrix)$cov,
                        genes = analysis_data[,-c(1:ncol(regressor_matrix))],
-                       foldThreshDEG = foldThreshDEG)
+                       foldThreshDEG = foldThreshDEG,
+                       DEGfun = DEGfun)
 
   results$df_DEG <- df_DEG
 
   if(verbose){
-    print(paste0(table(df_DEG$DEG)[names(table(df_DEG$DEG)) == 1], " up-regulated genes identified"))
-    print(paste0(table(df_DEG$DEG)[names(table(df_DEG$DEG)) == -1], " down-regulated genes identified"))
+    up <- max(table(df_DEG$DEG)[names(table(df_DEG$DEG)) == 1], 0)
+    down <- max(table(df_DEG$DEG)[names(table(df_DEG$DEG)) == -1], 0)
+
+    print(paste0(up, " up-regulated genes identified"))
+    print(paste0(down, " down-regulated genes identified"))
   }
 
   return(results)

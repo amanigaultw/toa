@@ -54,7 +54,7 @@ toa_boot <- function(toa_result, n_boot = 200, verbose = TRUE){
   toa_means <- toa_result$toa_means
 
   #
-  boot_DEG <- get_boot_DEG(analysis_data, regressor_matrix, foldThreshDEG, n_boot, verbose)
+  boot_DEG <- get_boot_DEG(analysis_data, regressor_matrix, foldThreshDEG, DEGfun, n_boot, verbose)
   boot_means_matrix <- get_boot_means_matrix(diagnosticity_scores, boot_DEG)
   boot_stats <- get_boot_stats(boot_means_matrix, toa_means)
 

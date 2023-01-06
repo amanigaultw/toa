@@ -31,7 +31,7 @@ a list object containing:
 }
 }
 \description{
-Computes a mean gene contrast score, along with bootstrapped tests statistics. A single \code{toa_boot_result} object or the combination of \code{DEG_result} object and \code{n_boot} are acceptable inputs.
+Computes a mean gene contrast score along with bootstrapped tests statistics. A single \code{toa_boot_result} object or the combination of \code{DEG_result} object and \code{n_boot} are acceptable inputs.
 }
 \examples{
 \dontrun{
