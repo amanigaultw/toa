@@ -15,6 +15,7 @@ analyze(
   reg_id_col = 1,
   ref_symbol_col = 1,
   foldThreshDEG = 1.5,
+  DEGfun = NULL,
   screenSD = 0,
   logZeroSub = 0.001,
   n_boot = 200,
@@ -51,6 +52,9 @@ the first column is used by default.}
 
 \item{foldThreshDEG}{the X-fold expression threshold to be exceeded for a given gene to be
 considered differentially expressed.}
+
+\item{DEGfun}{optionally input a custom function to derived differentially expressed genes. This function pulls variables
+from the local environment (including df_DEG, foldThreshDEG) and MUST return a DEG vector; see examples for more.}
 
 \item{screenSD}{minimum gene expression SD; genes that show expression variability below
 threshold are excluded.}
