@@ -65,7 +65,12 @@ contrast_boot <- function(toa_boot_result = NULL,
     boot_DEG <- toa_boot_result$boot_DEG
   }else{
     df_DEG_contrast_only <- merge(DEG_result$df_DEG, contrast, by = 1)
-    boot_DEG <- get_boot_DEG(DEG_result$analysis_data, DEG_result$inputs$regressor_matrix, DEG_result$inputs$foldThreshDEG, n_boot, verbose)
+    boot_DEG <- get_boot_DEG(analysis_data = DEG_result$analysis_data,
+                             regressor_matrix = DEG_result$inputs$regressor_matrix,
+                             foldThreshDEG = DEG_result$inputs$foldThreshDEG,
+                             DEGfun = DEG_result$inputs$DEGfun,
+                             n_boot = n_boot,
+                             verbose = verbose)
   }
 
   #handle the possibility of no match

@@ -50,6 +50,7 @@ toa_boot <- function(toa_result, n_boot = 200, verbose = TRUE){
   analysis_data <- toa_result$inputs$DEG$analysis_data
   regressor_matrix <- toa_result$inputs$DEG$inputs$regressor_matrix
   foldThreshDEG <- toa_result$inputs$DEG$inputs$foldThreshDEG
+  DEGfun <- toa_result$inputs$DEG$inputs$DEGfun
   diagnosticity_scores <- toa_result$diagnosticity_scores
   toa_means <- toa_result$toa_means
 
