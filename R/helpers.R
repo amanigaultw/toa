@@ -23,6 +23,8 @@ pre_DEG_merge <- function(expression_data_screened, regressor_matrix, exp_symbol
     return(NULL)
   }
 
+  stopifnot("Please verify that all sample IDs from the regressor matrix exist within the expression data matrix" = all(regressor_matrix[,reg_id_col] %in% rownames(analysis_data)))
+
   #merge with regressor_matrix
   analysis_data <- merge(regressor_matrix, analysis_data, by.x = reg_id_col, by.y = 0, all.x = TRUE)
 
